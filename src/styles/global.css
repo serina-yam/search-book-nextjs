@@ -1,12 +1,16 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 @layer base {
+    html {
+      background-image: linear-gradient(90deg, rgba(253, 146, 146, 1), rgba(209, 254, 212, 1));
+    }
+
     h2 {
         font-size: 1.5em;
         font-weight: bold;
         margin: 12px 0;
+        color: #393939;
       }
 }

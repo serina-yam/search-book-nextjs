@@ -1,6 +1,9 @@
 //.eslintrc.json
 {
-  "extends": ["next/core-web-vitals", "prettier"],
+  "extends": ["next/core-web-vitals", "prettier", "plugin:tailwindcss/recommended"],
+  "ignorePatterns": [
+    "*.config.js"
+  ],
   "rules": {
     "no-console": ["warn", { "allow": ["warn", "error"] }],
     "sort-imports": "off",
