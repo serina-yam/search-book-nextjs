@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from 'react'
 import { CornerDownLeft } from 'lucide-react'
+import React, { useRef, useEffect } from 'react'
 import { Loader } from './loader'
 
 interface Props {
@@ -33,7 +33,7 @@ const SearchBar: React.FC<Props> = ({ input, loading, handleInputChange, handleB
       <form
         onSubmit={(event) => event.preventDefault()}
         autoComplete="off"
-        className="bg-zinc-700 rounded-xl shadow-lg h-fit flex flex-row px-3 my-3 items-center w-full"
+        className="my-3 flex h-fit w-full flex-row items-center rounded-xl bg-zinc-700 px-3 shadow-lg"
       >
         <input
           type="text"
@@ -41,7 +41,7 @@ const SearchBar: React.FC<Props> = ({ input, loading, handleInputChange, handleB
           value={input}
           onChange={handleInputChange}
           placeholder="fantastic beasts"
-          className="bg-transparent text-white placeholder:text-gray-400 ring-0 outline-none resize-none py-2.5 px-2 font-mono text-sm h-10 w-full transition-all duration-300"
+          className="h-10 w-full resize-none bg-transparent px-2 py-2.5 font-mono text-sm text-white outline-none ring-0 transition-all duration-300 placeholder:text-gray-400"
           ref={inputRef}
         />
         {loading ? (
@@ -50,7 +50,7 @@ const SearchBar: React.FC<Props> = ({ input, loading, handleInputChange, handleB
           <button
             onClick={handleButtonClick}
             type="submit"
-            className="text-white rounded-lg hover:bg-white/25 focus:bg-white/25 w-8 h-8 aspect-square flex items-center justify-center ring-0 outline-0"
+            className="flex aspect-square h-8 w-8 items-center justify-center rounded-lg text-white outline-0 ring-0 hover:bg-white/25 focus:bg-white/25"
           >
             <CornerDownLeft size={16} className="-ml-px" />
           </button>

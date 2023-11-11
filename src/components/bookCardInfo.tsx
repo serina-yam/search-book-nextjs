@@ -34,7 +34,7 @@ export default function BookCardInfo({
   availability?: string
 }) {
   return (
-    <div className="px-5 py-7 bg-zinc-700 text-white rounded-xl">
+    <div className="rounded-xl bg-zinc-700 px-5 py-7 text-white">
       <dl className="flex">
         <dt className="w-36">タイトル:</dt>
         <dd className="w-3/4">{title}</dd>

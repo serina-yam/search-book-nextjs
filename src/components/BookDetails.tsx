@@ -1,6 +1,6 @@
 import { Card, CardBody, Image, CardFooter } from '@nextui-org/react'
-import BookCardInfo from './bookCardInfo'
 import { Popover, PopoverTrigger, PopoverContent } from '@nextui-org/react'
+import BookCardInfo from './bookCardInfo'
 
 export default function BookDetails({
   id,
@@ -46,12 +46,12 @@ export default function BookDetails({
     <>
       <Popover placement="right" backdrop="opaque" className="max-w-lg">
         <PopoverTrigger>
-          <Card className="py-4 cursor-pointer rounded-xl bg-slate-50	 h-full">
-            <CardBody className="overflow-visible py-2 items-center">
-              <Image alt={title} className="object-cover rounded-xl shadow-lg" src={thumbnail} width={128} />
+          <Card className="h-full cursor-pointer rounded-xl bg-slate-50	 py-4">
+            <CardBody className="items-center overflow-visible py-2">
+              <Image alt={title} className="rounded-xl object-cover shadow-lg" src={thumbnail} width={128} />
             </CardBody>
-            <CardFooter className="pb-0 pt-2 px-4 flex-col items-start">
-              <p className="text-tiny uppercase font-bold">{title}</p>
+            <CardFooter className="flex-col items-start px-4 pb-0 pt-2">
+              <p className="font-bold uppercase">{title}</p>
               {/* {bookProps.libraryInfo.map((info) => (
                         <small key={info.library} className="text-default-500">{info.library}:{info.state}</small>
                         ))} */}

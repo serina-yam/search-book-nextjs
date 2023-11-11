@@ -41,12 +41,12 @@ export default function BookCard({
     <>
       <Popover placement="right" backdrop="opaque" className="max-w-lg">
         <PopoverTrigger>
-          <Card className="py-4 capitalize cursor-pointer">
+          <Card className="cursor-pointer py-4 capitalize">
             <CardBody className="overflow-visible py-2">
-              <Image alt={title} className="object-cover rounded-xl shadow-lg" src={thumbnail} width={270} />
+              <Image alt={title} className="rounded-xl object-cover shadow-lg" src={thumbnail} width={270} />
             </CardBody>
-            <CardFooter className="pb-0 pt-2 px-4 flex-col items-start">
-              <p className="text-tiny uppercase font-bold">{title}</p>
+            <CardFooter className="flex-col items-start px-4 pb-0 pt-2">
+              <p className="font-bold uppercase">{title}</p>
               {/* {libraryInfo.map((info) => (
                 <small key={info.library} className="text-default-500">{info.library}:{info.state}</small>
                 ))} */}

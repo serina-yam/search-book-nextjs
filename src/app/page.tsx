@@ -3,18 +3,14 @@
 import axios from 'axios'
 import Head from 'next/head'
 import { useEffect, useRef, useState } from 'react'
-import Layout, { siteTitle } from '@/app/layout'
+import Layout from '@/app/layout'
 import BookDetails from '@/components/BookDetails'
 import SearchBar from '@/components/SearchBar'
 import utilStyles from '@/styles/utils.module.css'
 import BookInfo from '@/types/SearchResult'
 
 
-export default function Books({
-  bestsellers,
-}: {
-  bestsellers: BookInfo[]
-}) {
+export default function Books() {
   const [input, setInput] = useState('')
   const submitProcessing = useRef(false)
   const [books, setBooks] = useState<BookInfo[]>([])
@@ -71,7 +67,7 @@ export default function Books({
   return (
     <Layout>
       <Head>
-        <title>{siteTitle}</title>
+        <title>search books</title>
       </Head>
       <main>
       {/* <section className={`${utilStyles.headingMd} ${isVisible ? utilStyles.stickyBg : ''} sticky top-0`}> */}
@@ -114,32 +110,6 @@ export default function Books({
                 availability={book.saleInfo.saleability}
               />
             ))}
-            {/* {books.length === 0 && (
-                <>
-                  {
-                    bestsellers.map((book: BookInfo) => (
-                      <BookDetails 
-                        key={book.id}
-                        id={book.id}
-                        title={book.volumeInfo.title}
-                        previewLink={book.volumeInfo.previewLink}
-                        cover_image={book.volumeInfo.imageLinks?.thumbnail}
-                        description={book.volumeInfo.description}
-                        publishedDate={book.volumeInfo.publishedDate}
-                        averageRating={book.volumeInfo.averageRating}
-                        authors={book.volumeInfo.authors}
-                        infoLink={book.volumeInfo.infoLink}
-                        pageCount={book.volumeInfo.pageCount}
-                        thumbnail={book.volumeInfo.imageLinks?.thumbnail}
-                        language={book.volumeInfo.language}
-                        price={book.saleInfo.listPrice?.amount}
-                        publisher={book.volumeInfo.publisher}
-                        availability={book.saleInfo.saleability}
-                      />
-                    ))
-                  }
-                </>
-            )} */}
           </div>
         </section>
       </main>
