@@ -67,7 +67,7 @@ export default function Books() {
   return (
     <Layout>
       <Head>
-        <title>search books</title>
+        <title>search books!</title>
       </Head>
       <main>
       {/* <section className={`${utilStyles.headingMd} ${isVisible ? utilStyles.stickyBg : ''} sticky top-0`}> */}
