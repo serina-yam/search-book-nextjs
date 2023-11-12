@@ -3,9 +3,9 @@ import Home from '@/app/page'
 
 describe('Home', () => {
   it('renders a heading', () => {
-    render(<Home bestsellers={[]} />)
+    render(<Home />)
     const heading = screen.getByRole('heading', {
-      name: /welcome to next\.js/i,
+      name: /Let\'s search for books/i,
     })
     expect(heading).toBeInTheDocument()
   })

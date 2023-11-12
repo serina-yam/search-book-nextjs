@@ -10,7 +10,7 @@ import utilStyles from '@/styles/utils.module.css'
 import BookInfo from '@/types/SearchResult'
 
 
-export default function Books() {
+export default function Home() {
   const [input, setInput] = useState('')
   const submitProcessing = useRef(false)
   const [books, setBooks] = useState<BookInfo[]>([])
@@ -66,9 +66,9 @@ export default function Books() {
 
   return (
     <Layout>
-      <Head>
+      {/* <Head>
         <title>search books!</title>
-      </Head>
+      </Head> */}
       <main>
       {/* <section className={`${utilStyles.headingMd} ${isVisible ? utilStyles.stickyBg : ''} sticky top-0`}> */}
         <section className={`${utilStyles.headingMd}`}>
