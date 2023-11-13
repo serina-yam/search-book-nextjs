@@ -10,6 +10,10 @@
     "format": "prettier --write --ignore-path .gitignore .",
     "test": "jest"
   },
+  "engines" : { 
+    "npm" : "10.1.0",
+    "node" : "18.13.0"
+  },
   "dependencies": {
     "@nextui-org/react": "^2.2.8",
     "axios": "^1.6.1",
