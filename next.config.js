@@ -2,7 +2,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-  output: process.env.STANDALONE === "true" ? "standalone" : "export",
+  output: "standalone",
   // reactStrictMode: true,
   trailingSlash: true,
 }
