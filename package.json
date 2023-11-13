@@ -11,8 +11,8 @@
     "test": "jest"
   },
   "engines" : { 
-    "npm" : ">=8.0.0 <9.0.0",
-    "node" : "^18.17.0"
+    "npm" : "10.1.0",
+    "node" : "20.8.0"
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.8",
