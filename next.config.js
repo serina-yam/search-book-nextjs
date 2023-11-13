@@ -3,6 +3,5 @@ const nextConfig = {
     appDir: true,
   },
   output: "standalone",
-  // reactStrictMode: true,
   trailingSlash: true,
 }

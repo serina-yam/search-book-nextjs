@@ -66,9 +66,9 @@ export default function Home() {
 
   return (
     <Layout>
-      {/* <Head>
+      <Head>
         <title>search books!</title>
-      </Head> */}
+      </Head>
       <main>
       {/* <section className={`${utilStyles.headingMd} ${isVisible ? utilStyles.stickyBg : ''} sticky top-0`}> */}
         <section className={`${utilStyles.headingMd}`}>
@@ -76,7 +76,7 @@ export default function Home() {
             <h2 className="text-center">
               Let&apos;s search for books
               <br />
-              in the library
+              by title
             </h2>
             <SearchBar
               input={input}
@@ -87,7 +87,7 @@ export default function Home() {
           </div>
         </section>
         <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-          <div className="grid grid-cols-2 items-start gap-2 sm:grid-cols-4">
+          <div className="grid grid-cols-1 items-start gap-2 sm:grid-cols-4">
             {books.map((book: BookInfo) => (
               <BookDetails
                 key={book.id}

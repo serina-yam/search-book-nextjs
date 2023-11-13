@@ -38,23 +38,20 @@ export default function BookDetails({
   availability?: string
 }) {
   if (description) {
-    if (description.length >= 2000) {
-      description = description.slice(0, 1995) + '...'
+    if (description.length >= 200) {
+      description = description.slice(0, 195) + '...'
     }
   }
   return (
     <>
-      <Popover placement="right" backdrop="opaque" className="max-w-lg">
+      <Popover placement="bottom" backdrop="opaque" className="max-w-lg">
         <PopoverTrigger>
           <Card className="h-full cursor-pointer rounded-xl bg-slate-50	 py-4">
             <CardBody className="items-center overflow-visible py-2">
               <Image alt={title} className="rounded-xl object-cover shadow-lg" src={thumbnail} width={128} />
             </CardBody>
             <CardFooter className="flex-col items-start px-4 pb-0 pt-2">
-              <p className="font-bold uppercase">{title}</p>
-              {/* {bookProps.libraryInfo.map((info) => (
-                        <small key={info.library} className="text-default-500">{info.library}:{info.state}</small>
-                        ))} */}
+              <div className="font-bold uppercase">{title}</div>
             </CardFooter>
           </Card>
         </PopoverTrigger>
