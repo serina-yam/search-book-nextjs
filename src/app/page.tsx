@@ -1,16 +1,18 @@
 'use client'
 
 import axios from 'axios'
-import Head from 'next/head'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import Layout from '@/app/layout'
 import BookDetails from '@/components/BookDetails'
+import LoginButton from '@/components/LoginButton'
+import LogoutButton from '@/components/LogoutButton'
 import SearchBar from '@/components/SearchBar'
+import useAuth from '@/hooks/useAuth'
 import utilStyles from '@/styles/utils.module.css'
 import BookInfo from '@/types/SearchResult'
 
-
 export default function Home() {
+  const { session: isLogin } = useAuth()
   const [input, setInput] = useState('')
   const submitProcessing = useRef(false)
   const [books, setBooks] = useState<BookInfo[]>([])
@@ -53,24 +55,34 @@ export default function Home() {
     }
   }
 
-  // ヘッダの背景色変更
-  const [isVisible, setIsVisible] = useState(false)
-  const toggleVisibility = () => {
-    window.scrollY > 100 ? setIsVisible(true) : setIsVisible(false)
-  }
+  // // ヘッダの背景色変更
+  // const [isVisible, setIsVisible] = useState(false)
+  // const toggleVisibility = () => {
+  //   window.scrollY > 100 ? setIsVisible(true) : setIsVisible(false)
+  // }
 
-  useEffect(() => {
-    window.addEventListener('scroll', toggleVisibility)
-    return () => window.removeEventListener('scroll', toggleVisibility)
-  }, [])
+  // useEffect(() => {
+  //   window.addEventListener('scroll', toggleVisibility)
+  //   return () => window.removeEventListener('scroll', toggleVisibility)
+  // }, [])
 
   return (
     <Layout>
-      <Head>
-        <title>search books!</title>
-      </Head>
+        <header>
+        {isLogin ? (
+          <>
+            <h2>Githubでログアウト</h2>
+            <LogoutButton />
+          </>
+        ) : (
+          <>
+            <h2>Githubでサインイン</h2>
+            <LoginButton />
+          </>
+        )}
+        </header>
       <main>
-      {/* <section className={`${utilStyles.headingMd} ${isVisible ? utilStyles.stickyBg : ''} sticky top-0`}> */}
+        {/* <section className={`${utilStyles.headingMd} ${isVisible ? utilStyles.stickyBg : ''} sticky top-0`}> */}
         <section className={`${utilStyles.headingMd}`}>
           <div className={utilStyles.container}>
             <h2 className="text-center">
