@@ -1,4 +1,10 @@
-export default function BookCardInfo({
+'use client'
+
+import { Link } from "lucide-react"
+import { addLike, addStock, getData } from "@/lib/supabaseFunctions";
+
+
+export default function BookCardProp({
   id,
   title,
   isbn10,
@@ -33,6 +39,19 @@ export default function BookCardInfo({
   publisher?: string
   availability?: string
 }) {
+
+  const onGetData = () => {
+    getData('account');
+  }
+  
+  const onAddStock = () => {
+    addStock(id, isbn13);
+  };
+
+  const onAddLike = () => {
+    addLike(id, isbn13);
+  };
+
   return (
     <div className="rounded-xl bg-zinc-700 px-5 py-7 text-white">
       <dl className="flex">
@@ -71,6 +90,13 @@ export default function BookCardInfo({
         <dt className="w-36">ページ数:</dt>
         <dd className="w-3/4">{pageCount}</dd>
       </dl>
+
+      <div>
+        <button onClick={onGetData}>データ取得</button>
+        <button onClick={onAddStock}>ストックする</button>
+        <button onClick={onAddLike}>いいねする</button>
+      </div>
+      <Link href={`/books/${isbn10}`}>詳細情報</Link>
     </div>
   )
 }

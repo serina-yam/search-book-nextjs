@@ -1,6 +1,6 @@
 import { Card, CardBody, Image, CardFooter } from '@nextui-org/react'
 import { Popover, PopoverTrigger, PopoverContent } from '@nextui-org/react'
-import BookCardInfo from '@/components/bookCardInfo'
+import BookCardInfo from '@/components/BookCardProp'
 
 export default function BookCard({
   id,

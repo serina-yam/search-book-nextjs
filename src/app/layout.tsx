@@ -21,38 +21,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return () => authData.subscription.unsubscribe()
   }, [])
 
-  // // GitHubでサインイン
-  // const signInWithGithub = async () => {
-  //   try {
-  //     const { error } = await supabase.auth.signInWithOAuth({ provider: 'github' })
-  //     if (error) {
-  //       setError(error.message)
-  //     }
-  //   } catch (error) {
-  //     if (error instanceof Error) {
-  //       setError(error.message)
-  //     } else if (typeof error === 'string') {
-  //       setError(error)
-  //     } else {
-  //       console.error('GitHubとの連携に失敗しました。')
-  //     }
-  //   }
-  // }
-
-  // // ログインユーザーのプロフィール取得: GitHub
-  // const profileFromGithub: {
-  //   nickName: string
-  //   avatarUrl: string
-  // } = {
-  //   nickName: session?.user?.user_metadata.user_name,
-  //   avatarUrl: session?.user?.user_metadata.avatar_url,
-  // }
-
-  // // サインアウト
-  // const signOut = async () => {
-  //   await supabase.auth.signOut()
-  // }
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
