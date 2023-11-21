@@ -22,7 +22,10 @@ const useAuth = () => {
       const { error } = await supabase.auth.signInWithOAuth({ provider: 'github' })
       if (error) {
         setError(error.message)
+        return
       }
+
+      // ユーザー管理更新
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message)
@@ -36,10 +39,14 @@ const useAuth = () => {
 
   // ログインユーザーのプロフィール取得: GitHub
   const profileFromGithub: {
-    nickName: string
+    id: string
+    fullName: string
+    userName: string
     avatarUrl: string
   } = {
-    nickName: session?.user?.user_metadata.user_name,
+    id: session?.user?.user_metadata.provider_id,
+    fullName: session?.user?.user_metadata.full_name,
+    userName: session?.user?.user_metadata.user_name,
     avatarUrl: session?.user?.user_metadata.avatar_url,
   }
 

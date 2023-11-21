@@ -1,8 +1,9 @@
 'use client'
 
-import { Link } from "lucide-react"
-import { addLike, addStock, getData } from "@/lib/supabaseFunctions";
-
+import { Link as LinkImg, BookmarkPlus, BookmarkCheck, Heart, HeartOff } from 'lucide-react'
+import Link from 'next/link'
+import { useState } from 'react'
+import { addLike, addStock } from '@/lib/supabaseFunctions'
 
 export default function BookCardProp({
   id,
@@ -39,18 +40,26 @@ export default function BookCardProp({
   publisher?: string
   availability?: string
 }) {
+  const [stock, setStock] = useState(false)
+  const [like, setLike] = useState(false)
 
-  const onGetData = () => {
-    getData('account');
-  }
-  
   const onAddStock = () => {
-    addStock(id, isbn13);
-  };
+    if (stock) {
+      addStock(id, isbn13)
+      setStock(true)
+    } else {
+      // TODO delete
+    }
+  }
 
   const onAddLike = () => {
-    addLike(id, isbn13);
-  };
+    if (like) {
+      addLike(id, isbn13)
+      setLike(true)
+    } else {
+      // TODO delete
+    }
+  }
 
   return (
     <div className="rounded-xl bg-zinc-700 px-5 py-7 text-white">
@@ -92,11 +101,13 @@ export default function BookCardProp({
       </dl>
 
       <div>
-        <button onClick={onGetData}>データ取得</button>
-        <button onClick={onAddStock}>ストックする</button>
-        <button onClick={onAddLike}>いいねする</button>
+        <button onClick={onAddStock}>{stock ? <BookmarkCheck /> : <BookmarkPlus />}</button>
+        <button onClick={onAddLike}>{like ? <Heart /> : <HeartOff />}</button>
       </div>
-      <Link href={`/books/${isbn10}`}>詳細情報</Link>
+      <Link href={`/books/${isbn10}`} className="flex">
+        <LinkImg />
+        詳細情報
+      </Link>
     </div>
   )
 }

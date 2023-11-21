@@ -6,13 +6,13 @@ import Layout from '@/app/layout'
 import BookDetails from '@/components/BookDetails'
 import LoginButton from '@/components/LoginButton'
 import LogoutButton from '@/components/LogoutButton'
+import NavigationBar from '@/components/NavigationBar'
 import SearchBar from '@/components/SearchBar'
 import useAuth from '@/hooks/useAuth'
 import utilStyles from '@/styles/utils.module.css'
 import BookInfo from '@/types/SearchResult'
 
 export default function Home() {
-  const { session: isLogin } = useAuth()
   const [input, setInput] = useState('')
   const submitProcessing = useRef(false)
   const [books, setBooks] = useState<BookInfo[]>([])
@@ -66,22 +66,9 @@ export default function Home() {
   //   return () => window.removeEventListener('scroll', toggleVisibility)
   // }, [])
 
-
   return (
     <Layout>
-        <header>
-        {isLogin ? (
-          <>
-            <h2>Githubでログアウト</h2>
-            <LogoutButton />
-          </>
-        ) : (
-          <>
-            <h2>Githubでサインイン</h2>
-            <LoginButton />
-          </>
-        )}
-        </header>
+      <NavigationBar />
       <main>
         {/* <section className={`${utilStyles.headingMd} ${isVisible ? utilStyles.stickyBg : ''} sticky top-0`}> */}
         <section className={`${utilStyles.headingMd}`}>

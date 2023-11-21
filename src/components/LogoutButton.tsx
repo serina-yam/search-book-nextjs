@@ -1,24 +1,22 @@
 'use client'
 
-import { createBrowserClient } from '@supabase/ssr'
-import { Database } from '@/lib/supabase'
-
+import { Button } from '@nextui-org/react'
+import { LogOut } from 'lucide-react'
+import supabase from '@/lib/supabase'
 
 const LogoutButton = () => {
-  const supabase = createBrowserClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
-  // const supabase = () => client;
-
   const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut()
     if (error) {
       return error
     }
-    // location.reload()
+    window.location.href = "/"
   }
-  return <button onClick={handleSignOut}>ログアウト</button>
+  return (
+    <Button onClick={handleSignOut} color="primary" variant="bordered" startContent={<LogOut />}>
+      Logout
+    </Button>
+  )
 }
 
-export default LogoutButton;
+export default LogoutButton

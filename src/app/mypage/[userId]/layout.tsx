@@ -1,11 +1,10 @@
 'use client'
 
-import '../styles/global.css'
+import '@/styles/global.css'
 import { Session } from '@supabase/supabase-js'
 import { useEffect, useState } from 'react'
 import styles from '@/app/layout.module.css'
 import LogoutButton from '@/components/LogoutButton'
-import NavigationBar from '@/components/NavigationBar'
 import supabase from '@/lib/supabase'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -24,7 +23,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" />
-        <meta name="description" content="Let's search for books" />
+        <meta name="description" content="Mypage" />
       </head>
       <body className={styles.container}>{children}</body>
     </html>
