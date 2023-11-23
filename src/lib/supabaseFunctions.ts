@@ -1,5 +1,5 @@
-import { Account, Stock, Like } from './supabase'
 import supabase from '@/lib/supabase'
+import BookInfo from '@/types/BookInfo'
 
 // データの全取得
 export const getData = async (tableName: string): Promise<void> => {
@@ -23,6 +23,26 @@ export const addAccount = async (name: string, last_login_time: Date): Promise<v
   } else {
     alert('アカウントを追加しました！')
   }
+}
+
+export const getBookByStockIsbn = async (user_id: string) => {
+  const { data: bookData, error } = await supabase
+    .from('book')
+    .select(
+      `
+    stock ( isbn )
+    name, 
+    shelf_count,
+    like_count,
+  `
+    )
+    .eq('stock.user_id', user_id)
+
+  if (error) {
+    alert(error.message)
+  }
+
+  return bookData
 }
 
 // add stock table

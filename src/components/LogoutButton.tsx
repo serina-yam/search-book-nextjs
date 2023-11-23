@@ -10,7 +10,7 @@ const LogoutButton = () => {
     if (error) {
       return error
     }
-    window.location.href = "/"
+    window.location.href = '/'
   }
   return (
     <Button onClick={handleSignOut} color="primary" variant="bordered" startContent={<LogOut />}>

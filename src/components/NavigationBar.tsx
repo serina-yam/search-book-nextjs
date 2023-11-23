@@ -1,9 +1,8 @@
-import { Avatar, Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/react'
-import { Library, MoonStar, LibraryBig, Link as LinkImg } from 'lucide-react'
+import { Avatar, Navbar, NavbarBrand, NavbarItem } from '@nextui-org/react'
+import { MoonStar, LibraryBig } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import LoginButton from '@/components/LoginButton'
-import LogoutButton from '@/components/LogoutButton'
 import useAuth from '@/hooks/useAuth'
 
 export default function NavigationBar() {

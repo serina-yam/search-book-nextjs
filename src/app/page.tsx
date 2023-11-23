@@ -3,14 +3,11 @@
 import axios from 'axios'
 import { useRef, useState } from 'react'
 import Layout from '@/app/layout'
-import BookDetails from '@/components/BookDetails'
-import LoginButton from '@/components/LoginButton'
-import LogoutButton from '@/components/LogoutButton'
-import NavigationBar from '@/components/NavigationBar'
-import SearchBar from '@/components/SearchBar'
-import useAuth from '@/hooks/useAuth'
+import BookDetails from '@/components/bookDetails'
+import NavigationBar from '@/components/navigationBar'
+import SearchBar from '@/components/searchBar'
 import utilStyles from '@/styles/utils.module.css'
-import BookInfo from '@/types/SearchResult'
+import BookInfo from '@/types/BookInfo'
 
 export default function Home() {
   const [input, setInput] = useState('')

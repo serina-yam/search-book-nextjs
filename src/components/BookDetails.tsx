@@ -18,6 +18,8 @@ export default function BookDetails({
   price,
   publisher,
   availability,
+  shelfCount,
+  likeCount
 }: {
   id: string
   title: string
@@ -36,6 +38,8 @@ export default function BookDetails({
   price?: number
   publisher?: string
   availability?: string
+  shelfCount?: number
+  likeCount?: number
 }) {
   if (description) {
     if (description.length >= 200) {

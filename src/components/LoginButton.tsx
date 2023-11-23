@@ -8,10 +8,9 @@ const LoginButton = () => {
 
   return (
     <div>
-
       <Button onClick={signInWithGithub} color="primary" variant="bordered" startContent={<LogIn />}>
-      Login with GitHub 
-    </Button>
+        Login with GitHub
+      </Button>
       {error && <p>{error}</p>}
     </div>
   )
