@@ -4,7 +4,7 @@ import '@/styles/global.css'
 import { Session } from '@supabase/supabase-js'
 import { useEffect, useState } from 'react'
 import styles from '@/app/layout.module.css'
-import LogoutButton from '@/components/LogoutButton'
+import LogoutButton from '@/components/logoutButton'
 import supabase from '@/lib/supabase'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
