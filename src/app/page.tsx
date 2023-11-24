@@ -7,7 +7,7 @@ import BookDetails from '@/components/bookDetails'
 import NavigationBar from '@/components/navigationBar'
 import SearchBar from '@/components/searchBar'
 import utilStyles from '@/styles/utils.module.css'
-import BookInfo from '@/types/BookInfo'
+import BookInfo from '@/types/bookInfo'
 
 export default function Home() {
   const [input, setInput] = useState('')
