@@ -2,7 +2,7 @@ import { Avatar, Navbar, NavbarBrand, NavbarItem } from '@nextui-org/react'
 import { MoonStar, LibraryBig } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
-import LoginButton from '@/components/LoginButton'
+import LoginButton from '@/components/loginButton'
 import useAuth from '@/hooks/useAuth'
 
 export default function NavigationBar() {
