@@ -5,7 +5,7 @@ export default function Stock({
   title,
   thumbnail,
   shelfCount,
-  likeCount
+  likeCount,
 }: {
   isbn: string
   title: string | null
@@ -13,7 +13,6 @@ export default function Stock({
   shelfCount: number | null
   likeCount: number | null
 }) {
-
   return (
     <>
       <Card className="h-full cursor-pointer rounded-xl bg-slate-50	 py-4">
@@ -21,10 +20,10 @@ export default function Stock({
           <Image alt={title} className="rounded-xl object-cover shadow-lg" src={thumbnail} width={128} />
         </CardBody>
         <CardFooter className="flex-col items-start px-4 pb-0 pt-2">
-          <div className="font-bold uppercase">ISBN:{isbn}</div>
-          <div className="font-bold uppercase">title:{title}</div>
-          <div className="font-bold uppercase">ストックされた回数:{shelfCount}</div>
-          <div className="font-bold uppercase">いいねされた回数:{likeCount}</div>
+          <div>ISBN:{isbn}</div>
+          <div>Title:{title}</div>
+          <div>Stock:{shelfCount ? shelfCount : 0}</div>
+          <div>Like:{likeCount ? likeCount : 0}</div>
         </CardFooter>
       </Card>
     </>

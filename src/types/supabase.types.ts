@@ -73,44 +73,25 @@ export interface Database {
           isbn?: string
           user_id?: number | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "like_isbn_fkey"
-            columns: ["isbn"]
-            isOneToOne: true
-            referencedRelation: "book"
-            referencedColumns: ["id"]
-          }
-        ]
+        Relationships: []
       }
       stock: {
         Row: {
           created_at: string
-          id: string
-          isbn: string | null
-          user_id: number | null
+          isbn: string
+          user_id: number
         }
         Insert: {
           created_at?: string
-          id?: string
-          isbn?: string | null
-          user_id?: number | null
+          isbn: string
+          user_id: number
         }
         Update: {
           created_at?: string
-          id?: string
-          isbn?: string | null
-          user_id?: number | null
+          isbn?: string
+          user_id?: number
         }
-        Relationships: [
-          {
-            foreignKeyName: "stock_isbn_fkey"
-            columns: ["isbn"]
-            isOneToOne: false
-            referencedRelation: "book"
-            referencedColumns: ["id"]
-          }
-        ]
+        Relationships: []
       }
     }
     Views: {

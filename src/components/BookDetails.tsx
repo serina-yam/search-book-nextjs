@@ -1,6 +1,6 @@
 import { Card, CardBody, Image, CardFooter } from '@nextui-org/react'
 import { Popover, PopoverTrigger, PopoverContent } from '@nextui-org/react'
-import BookCardInfo from './BookCardProp'
+import BookCardProp from '@/components/bookCardProp'
 
 export default function BookDetails({
   id,
@@ -19,7 +19,7 @@ export default function BookDetails({
   publisher,
   availability,
   shelfCount,
-  likeCount
+  likeCount,
 }: {
   id: string
   title: string
@@ -60,7 +60,7 @@ export default function BookDetails({
           </Card>
         </PopoverTrigger>
         <PopoverContent>
-          <BookCardInfo
+          <BookCardProp
             key={id}
             id={id}
             title={title}

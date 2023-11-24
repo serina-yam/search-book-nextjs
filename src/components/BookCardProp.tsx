@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 'use client'
 
 import { Link as LinkImg, BookmarkPlus, BookmarkCheck, Heart, HeartOff } from 'lucide-react'
 import Link from 'next/link'
-import { useState } from 'react'
-import { addLike, addStock } from '@/lib/supabaseFunctions'
+import { useEffect, useRef, useState } from 'react'
+import { Loader } from './loader'
+import { addBook, addLike, addStock, deleteLike, deleteStock, getBook, getLike, getStock } from '@/lib/supabaseFunctions'
 
 export default function BookCardProp({
   id,
@@ -40,26 +42,152 @@ export default function BookCardProp({
   publisher?: string
   availability?: string
 }) {
+  const [init, setInit] = useState(true)
+
   const [stock, setStock] = useState(false)
+  const submitStockProcessing = useRef(false)
+  const [loadingStock, setLoadingStock] = useState(false)
+
   const [like, setLike] = useState(false)
+  const submitLikeProcessing = useRef(false)
+  const [loadingLike, setLoadingLike] = useState(false)
+
+  const userId = 64587946
+  const isbn = isbn13 ? isbn13 : isbn10
+
+  useEffect(() => {
+    // データを取得する処理を行う関数
+    const fetchStock = async () => {
+      getStock(userId, isbn)
+        .then((stockData) => {
+          if (stockData?.length !== 0) {
+            setStock(true)
+          }
+        })
+    };
+
+    const fetchLike = async () => {
+      getLike(userId, isbn)
+        .then((likeData) => {
+          if (likeData?.length !== 0) {
+            setLike(true)
+          }
+        })
+    };
+
+    if (init) {
+      fetchStock();
+      fetchLike();
+      setInit(false)
+    }
+  });
+
 
   const onAddStock = () => {
-    if (stock) {
-      addStock(id, isbn13)
-      setStock(true)
-    } else {
-      // TODO delete
-    }
+    // 連続送信中止
+    if (submitStockProcessing.current) return
+    submitStockProcessing.current = true
+
+    setLoadingStock(true)
+    addStock(userId, isbn)
+      .then(() => {
+        setStock(true)
+
+        // book情報なければ登録
+        addBookDataNonExists();
+
+        setLoadingStock(false)
+        submitStockProcessing.current = false
+      })
+      .catch((error) => {
+        console.error(error)
+        setStock(false)
+        setLoadingStock(false)
+        submitStockProcessing.current = false
+      })
+  }
+
+  const onDeleteStock = () => {
+    // 連続送信中止
+    if (submitStockProcessing.current) return
+    submitStockProcessing.current = true
+
+    setLoadingStock(true)
+    deleteStock(userId, isbn13)
+      .then(() => {
+        setStock(false)
+        setLoadingStock(false)
+        submitStockProcessing.current = false
+      })
+      .catch((error) => {
+        console.error(error)
+        setStock(false)
+        setLoadingStock(false)
+        submitStockProcessing.current = false
+      })
   }
 
   const onAddLike = () => {
-    if (like) {
-      addLike(id, isbn13)
-      setLike(true)
-    } else {
-      // TODO delete
-    }
+    // 連続送信中止
+    if (submitLikeProcessing.current) return
+    submitLikeProcessing.current = true
+
+    setLoadingLike(true)
+    addLike(userId, isbn)
+      .then(() => {
+        setLike(true)
+
+        // book情報なければ登録
+        addBookDataNonExists();
+
+        setLoadingLike(false)
+        submitLikeProcessing.current = false
+      })
+      .catch((error) => {
+        console.error(error)
+        setLike(false)
+        setLoadingLike(false)
+        submitLikeProcessing.current = false
+      })
   }
+
+  const onDeleteLike = () => {
+    // 連続送信中止
+    if (submitLikeProcessing.current) return
+    submitLikeProcessing.current = true
+
+    setLoadingLike(true)
+    deleteLike(userId, isbn)
+      .then(() => {
+        setLike(false)
+        setLoadingLike(false)
+        submitLikeProcessing.current = false
+      })
+      .catch((error) => {
+        console.error(error)
+        setLike(false)
+        setLoadingLike(false)
+        submitLikeProcessing.current = false
+      })
+  }
+
+  const addBookDataNonExists = async () => {
+    
+    getBook(isbn)
+    .then((bookData) => {
+      if (!!bookData) {
+        console.info('Data already exists');
+        return;
+      }
+      
+      // データが存在しないときのみデータ登録
+      const bookTitle = title
+      addBook(isbn, bookTitle, thumbnail)
+        .then(() => {
+          console.log('added book');
+        })
+    })
+  };
 
   return (
     <div className="rounded-xl bg-zinc-700 px-5 py-7 text-white">
@@ -101,8 +229,32 @@ export default function BookCardProp({
       </dl>
 
       <div>
-        <button onClick={onAddStock}>{stock ? <BookmarkCheck /> : <BookmarkPlus />}</button>
-        <button onClick={onAddLike}>{like ? <Heart /> : <HeartOff />}</button>
+        {loadingStock ? (
+          <button>
+            <Loader />
+          </button>
+        ) : stock ? (
+          <button onClick={onDeleteStock}>
+            <BookmarkCheck />
+            削除
+          </button>
+        ) : (
+          <button onClick={onAddStock}>
+            <BookmarkPlus />
+            追加
+          </button>
+        )}
+
+        
+          {loadingLike ? (
+            <button><Loader /></button>
+          ) : (
+            like ? (
+              <button onClick={onDeleteLike}><Heart /></button>
+          ) : (
+            <button onClick={onAddLike}><HeartOff /></button>
+          )
+        )}
       </div>
       <Link href={`/books/${isbn10}`} className="flex">
         <LinkImg />
