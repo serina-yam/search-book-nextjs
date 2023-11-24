@@ -42,8 +42,6 @@ export default function BookCardProp({
   publisher?: string
   availability?: string
 }) {
-  const [init, setInit] = useState(true)
-
   const [stock, setStock] = useState(false)
   const submitStockProcessing = useRef(false)
   const [loadingStock, setLoadingStock] = useState(false)
@@ -75,12 +73,10 @@ export default function BookCardProp({
         })
     };
 
-    if (init) {
-      fetchStock();
-      fetchLike();
-      setInit(false)
-    }
-  });
+    fetchStock();
+    fetchLike();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
 
   const onAddStock = () => {
