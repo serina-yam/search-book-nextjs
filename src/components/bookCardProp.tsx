@@ -5,6 +5,7 @@ import { Link as LinkImg, BookmarkPlus, BookmarkCheck, Heart, HeartOff } from 'l
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { Loader } from './loader'
+import useAuth from '@/hooks/useAuth'
 import { addBook, addLike, addStock, deleteLike, deleteStock, getBook, getLike, getStock } from '@/lib/supabaseFunctions'
 
 export default function BookCardProp({
@@ -46,11 +47,8 @@ export default function BookCardProp({
   const submitStockProcessing = useRef(false)
   const [loadingStock, setLoadingStock] = useState(false)
 
-  const [like, setLike] = useState(false)
-  const submitLikeProcessing = useRef(false)
-  const [loadingLike, setLoadingLike] = useState(false)
-
-  const userId = 64587946
+  const { profileFromGithub } = useAuth()
+  const userId = profileFromGithub.id
   const isbn = isbn13 ? isbn13 : isbn10
 
   useEffect(() => {
@@ -58,23 +56,15 @@ export default function BookCardProp({
     const fetchStock = async () => {
       getStock(userId, isbn)
         .then((stockData) => {
-          if (stockData?.length !== 0) {
+          if (stockData == null || stockData?.length == 0) {
+            setStock(false)
+          } else {
             setStock(true)
           }
         })
     };
 
-    const fetchLike = async () => {
-      getLike(userId, isbn)
-        .then((likeData) => {
-          if (likeData?.length !== 0) {
-            setLike(true)
-          }
-        })
-    };
-
     fetchStock();
-    fetchLike();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -123,50 +113,6 @@ export default function BookCardProp({
       })
   }
 
-  const onAddLike = () => {
-    // 連続送信中止
-    if (submitLikeProcessing.current) return
-    submitLikeProcessing.current = true
-
-    setLoadingLike(true)
-    addLike(userId, isbn)
-      .then(() => {
-        setLike(true)
-
-        // book情報なければ登録
-        addBookDataNonExists();
-
-        setLoadingLike(false)
-        submitLikeProcessing.current = false
-      })
-      .catch((error) => {
-        console.error(error)
-        setLike(false)
-        setLoadingLike(false)
-        submitLikeProcessing.current = false
-      })
-  }
-
-  const onDeleteLike = () => {
-    // 連続送信中止
-    if (submitLikeProcessing.current) return
-    submitLikeProcessing.current = true
-
-    setLoadingLike(true)
-    deleteLike(userId, isbn)
-      .then(() => {
-        setLike(false)
-        setLoadingLike(false)
-        submitLikeProcessing.current = false
-      })
-      .catch((error) => {
-        console.error(error)
-        setLike(false)
-        setLoadingLike(false)
-        submitLikeProcessing.current = false
-      })
-  }
-
   const addBookDataNonExists = async () => {
     
     getBook(isbn)
@@ -186,7 +132,7 @@ export default function BookCardProp({
   };
 
   return (
-    <div className="rounded-xl bg-zinc-700 px-5 py-7 text-white">
+    <div className="rounded-xl bg-blue-950	 px-5 py-7 text-white">
       <dl className="flex">
         <dt className="w-36">タイトル:</dt>
         <dd className="w-3/4">{title}</dd>
@@ -231,25 +177,12 @@ export default function BookCardProp({
           </button>
         ) : stock ? (
           <button onClick={onDeleteStock}>
-            <BookmarkCheck />
-            削除
+            <BookmarkCheck color="#eb4667" />
           </button>
         ) : (
           <button onClick={onAddStock}>
-            <BookmarkPlus />
-            追加
+            <BookmarkPlus color="#bdbdbd" />
           </button>
-        )}
-
-        
-          {loadingLike ? (
-            <button><Loader /></button>
-          ) : (
-            like ? (
-              <button onClick={onDeleteLike}><Heart /></button>
-          ) : (
-            <button onClick={onAddLike}><HeartOff /></button>
-          )
         )}
       </div>
       <Link href={`/books/${isbn10}`} className="flex">

@@ -1,17 +1,14 @@
 import supabase from '@/lib/supabase'
 
 /**
- * データの全取得
- * @param tableName 
+ * select * from stock where user_id = #{user_id}
+ * @param user_id 
  * @returns 
  */
-export const getData = async (tableName: string): Promise<void> => {
-  const { data: allData, error } = await supabase.from(tableName).select('*')
+export const getAccount = async (id: number) => {
+  const { data } = await supabase.from('account').select('*').eq('id', id).single()
 
-  if (error) {
-    alert(error.message)
-    return
-  }
+  return data
 }
 
 /**
@@ -19,17 +16,20 @@ export const getData = async (tableName: string): Promise<void> => {
  * @param name 
  * @param last_login_time 
  */
-export const addAccount = async (name: string, last_login_time: Date): Promise<void> => {
-  const { data: likeData, error } = await supabase
+export const addAccount = async (id: number, name: string) => {
+  // TODO +9hで登録されるようにする
+  const lastLoginTime = new Date().toISOString();
+
+  const { data, error } = await supabase
     .from('account')
-    .insert([{ name: name }])
+    .upsert([{ id:id, name: name, last_login_time: lastLoginTime }])
     .select('*')
 
   if (error) {
     alert(error.message)
-  } else {
-    alert('アカウントを追加しました！')
   }
+
+  return data
 }
 /**
  * select * from stock where user_id = #{user_id}
@@ -73,8 +73,8 @@ export const addStock = async (user_id: number, isbn: string) => {
  * @returns 
  */
 export const deleteStock = async (user_id: number, isbn: string) => {
-  const { data } = await supabase.from('stock').delete().eq('user_id', user_id).eq('isbn', isbn).select('*')
-  return data
+  const { error } = await supabase.from('stock').delete().eq('user_id', user_id).eq('isbn', isbn)
+  return error
 }
 
 

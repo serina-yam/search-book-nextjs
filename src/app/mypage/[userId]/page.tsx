@@ -13,21 +13,32 @@ import utilStyles from '@/styles/utils.module.css'
 export default function Mypage({}: { params: { slug: string } }) {
   const { profileFromGithub } = useAuth()
   const [books, setBooks] = useState<Tables<'book'>[]>()
-  const user_id = '64587946'
+  const userId = 64587946
+  const [lastLoginTime, setLastLoginTime] = useState<string | null | undefined>('')
 
 
   useEffect(() => {
+
+    // getAccount(user_id)
+    //   .then((data) => {
+    //     const timestamp = data?.last_login_time; // Supabaseから取得したタイムスタンプ
+    //     if (timestamp !== null && timestamp !== undefined) {
+    //       const japanTime = new Date(timestamp).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
+    //       setLastLoginTime(japanTime)
+    //     }
+    //   })
     fetchStocks()
-  })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // ユーザーの本棚情報取得
   const fetchStocks = async () => {
-    const { data: stockData } = await supabase.from('stock').select('isbn').eq('user_id', user_id)
+    const { data: stockData } = await supabase.from('stock').select('isbn').eq('user_id', userId)
     const isbnArray = stockData
       ?.map((item: any) => item.isbn)
       .filter((isbn: any) => typeof isbn === 'string') as string[];
 
-    if (isbnArray.length === 0) return
+    if (isbnArray === undefined || isbnArray.length === 0) return
 
     const stocksByUserQuery = supabase
       .from('book')
@@ -56,10 +67,11 @@ export default function Mypage({}: { params: { slug: string } }) {
             />
             <h2>{profileFromGithub.fullName}さんの本棚</h2>
           </div>
+          {/* <div>最終ログイン日時：{lastLoginTime}</div> */}
           <LogoutButton />
         </div>
-        <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-          <div className="grid grid-cols-1 items-start gap-2 sm:grid-cols-4">
+        <div className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+          <div className="grid grid-cols-2 items-start gap-2 sm:grid-cols-2">
             {books &&
               books.map((book: Tables<'book'>) => (
                 <Stock
@@ -67,12 +79,10 @@ export default function Mypage({}: { params: { slug: string } }) {
                   isbn={book.id}
                   title={book.name}
                   thumbnail={book.thumbnail}
-                  shelfCount={book.shelf_count}
-                  likeCount={book.like_count}
                 />
               ))}
           </div>
-        </section>
+        </div>
       </div>
     </Layout>
   )

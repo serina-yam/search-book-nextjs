@@ -67,8 +67,8 @@ export default function Home() {
     <Layout>
       <NavigationBar />
       <main>
-        {/* <section className={`${utilStyles.headingMd} ${isVisible ? utilStyles.stickyBg : ''} sticky top-0`}> */}
-        <section className={`${utilStyles.headingMd}`}>
+        {/* <div className={`${utilStyles.headingMd} ${isVisible ? utilStyles.stickyBg : ''} sticky top-0`}> */}
+        <div className={`${utilStyles.headingMd}`}>
           <div className={utilStyles.container}>
             <h2 className="text-center">
               Let&apos;s search for books
@@ -82,8 +82,8 @@ export default function Home() {
               handleButtonClick={handleButtonClick}
             />
           </div>
-        </section>
-        <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+        </div>
+        <div className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
           <div className="grid grid-cols-1 items-start gap-2 sm:grid-cols-4">
             {books.map((book: BookInfo) => (
               <BookDetails
@@ -108,7 +108,7 @@ export default function Home() {
               />
             ))}
           </div>
-        </section>
+        </div>
       </main>
     </Layout>
   )
