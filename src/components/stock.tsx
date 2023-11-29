@@ -13,10 +13,18 @@ export default function Stock({
   isbn,
   title,
   thumbnail,
+  publisher,
+  publishedDate,
+  pageCount,
+  description
 }: {
   isbn: string
   title: string | null
   thumbnail: string | null
+  publisher: string | null
+  publishedDate: string | null
+  pageCount: number | null
+  description: string | null
 }) {
   const [stock, setStock] = useState(false)
   const submitStockProcessing = useRef(false)
@@ -62,7 +70,11 @@ export default function Stock({
       }
 
       // データが存在しないときのみデータ登録
-      addBook(isbn, title ?? '', thumbnail ?? '').then(() => {
+      addBook(
+        isbn, title ?? '', thumbnail ?? '',
+        publisher ?? '', publishedDate ?? '',
+        pageCount ?? 0, description ?? ''
+        ).then(() => {
         // eslint-disable-next-line no-console
         console.log('added book')
       })
