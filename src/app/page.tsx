@@ -3,7 +3,7 @@
 import axios from 'axios'
 import { useRef, useState } from 'react'
 import Layout from '@/app/layout'
-import BookDetails from '@/components/bookDetails'
+import BookCard from '@/components/BookCard'
 import NavigationBar from '@/components/navigationBar'
 import SearchBar from '@/components/searchBar'
 import utilStyles from '@/styles/utils.module.css'
@@ -86,7 +86,7 @@ export default function Home() {
         <div className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
           <div className="grid grid-cols-1 items-start gap-2 sm:grid-cols-4">
             {books.map((book: BookInfo) => (
-              <BookDetails
+              <BookCard
                 key={book.id}
                 id={book.id}
                 title={book.volumeInfo.title}

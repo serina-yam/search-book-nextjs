@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
 'use client'
 
-import { Link as LinkImg, BookmarkPlus, BookmarkCheck, Heart, HeartOff } from 'lucide-react'
+import { Link as LinkImg, BookmarkPlus, BookmarkCheck } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { Loader } from './loader'
 import useAuth from '@/hooks/useAuth'
-import { addBook, addLike, addStock, deleteLike, deleteStock, getBook, getLike, getStock } from '@/lib/supabaseFunctions'
+import { addBook, addStock, deleteStock, getBook, getStock } from '@/lib/supabaseFunctions'
 
 export default function BookCardProp({
   id,
@@ -15,33 +15,21 @@ export default function BookCardProp({
   isbn13,
   description,
   publishedDate,
-  averageRating,
   authors,
-  infoLink,
   pageCount,
   thumbnail,
-  previewLink,
-  price,
   publisher,
-  availability,
 }: {
   id: string
   title: string
   isbn10: string
   isbn13: string
-  previewLink: string
-  cover_image?: string
   description: string
   publishedDate: string
-  averageRating: number
   authors: string[]
-  infoLink: string
   pageCount: number
   thumbnail: string
-  language?: string
-  price?: number
   publisher?: string
-  availability?: string
 }) {
   const [stock, setStock] = useState(false)
   const submitStockProcessing = useRef(false)
@@ -137,10 +125,6 @@ export default function BookCardProp({
         <dt className="w-36">タイトル:</dt>
         <dd className="w-3/4">{title}</dd>
       </dl>
-      {/* <dl className="flex">
-          <dt className="w-36">サブタイトル:</dt>
-          <dd className="w-3/4">{subtitle}</dd>
-        </dl> */}
       <dl className="flex">
         <dt className="w-36">著者:</dt>
         <dd className="w-3/4">{authors}</dd>
@@ -149,10 +133,10 @@ export default function BookCardProp({
         <dt className="w-36">出版社:</dt>
         <dd className="w-3/4">{publisher}</dd>
       </dl>
-      {/* <dl className="flex">
+      <dl className="flex">
           <dt className="w-36">あらすじ:</dt>
           <dd className="w-3/4">{description}</dd>
-        </dl> */}
+        </dl>
       <dl className="flex">
         <dt className="w-36">ISBN10:</dt>
         <dd className="w-3/4">{isbn10}</dd>
