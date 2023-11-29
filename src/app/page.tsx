@@ -92,19 +92,12 @@ export default function Home() {
                 title={book.volumeInfo.title}
                 isbn10={book.volumeInfo.industryIdentifiers[0]?.identifier}
                 isbn13={book.volumeInfo.industryIdentifiers[1]?.identifier}
-                previewLink={book.volumeInfo.previewLink}
-                cover_image={book.volumeInfo.imageLinks?.thumbnail}
                 description={book.volumeInfo.description}
                 publishedDate={book.volumeInfo.publishedDate}
-                averageRating={book.volumeInfo.averageRating}
                 authors={book.volumeInfo.authors}
-                infoLink={book.volumeInfo.infoLink}
                 pageCount={book.volumeInfo.pageCount}
                 thumbnail={book.volumeInfo.imageLinks?.thumbnail}
-                language={book.volumeInfo.language}
-                price={book.saleInfo.listPrice?.amount}
                 publisher={book.volumeInfo.publisher}
-                availability={book.saleInfo.saleability}
               />
             ))}
           </div>

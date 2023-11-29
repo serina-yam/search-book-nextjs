@@ -42,20 +42,18 @@ export default function BookCardProp({
   useEffect(() => {
     // データを取得する処理を行う関数
     const fetchStock = async () => {
-      getStock(userId, isbn)
-        .then((stockData) => {
-          if (stockData == null || stockData?.length == 0) {
-            setStock(false)
-          } else {
-            setStock(true)
-          }
-        })
-    };
+      getStock(userId, isbn).then((stockData) => {
+        if (stockData == null || stockData?.length == 0) {
+          setStock(false)
+        } else {
+          setStock(true)
+        }
+      })
+    }
 
-    fetchStock();
+    fetchStock()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  }, [])
 
   const onAddStock = () => {
     // 連続送信中止
@@ -68,7 +66,7 @@ export default function BookCardProp({
         setStock(true)
 
         // book情報なければ登録
-        addBookDataNonExists();
+        addBookDataNonExists()
 
         setLoadingStock(false)
         submitStockProcessing.current = false
@@ -102,22 +100,19 @@ export default function BookCardProp({
   }
 
   const addBookDataNonExists = async () => {
-    
-    getBook(isbn)
-    .then((bookData) => {
+    getBook(isbn).then((bookData) => {
       if (!!bookData) {
-        console.info('Data already exists');
-        return;
+        console.info('Data already exists')
+        return
       }
-      
+
       // データが存在しないときのみデータ登録
       const bookTitle = title
-      addBook(isbn, bookTitle, thumbnail)
-        .then(() => {
-          console.log('added book');
-        })
+      addBook(isbn, bookTitle, thumbnail).then(() => {
+        console.log('added book')
+      })
     })
-  };
+  }
 
   return (
     <div className="rounded-xl bg-blue-950	 px-5 py-7 text-white">
@@ -134,9 +129,9 @@ export default function BookCardProp({
         <dd className="w-3/4">{publisher}</dd>
       </dl>
       <dl className="flex">
-          <dt className="w-36">あらすじ:</dt>
-          <dd className="w-3/4">{description}</dd>
-        </dl>
+        <dt className="w-36">あらすじ:</dt>
+        <dd className="w-3/4">{description}</dd>
+      </dl>
       <dl className="flex">
         <dt className="w-36">ISBN10:</dt>
         <dd className="w-3/4">{isbn10}</dd>

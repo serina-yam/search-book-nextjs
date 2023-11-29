@@ -10,7 +10,6 @@ const useAuth = () => {
   useEffect(() => {
     // ログイン状態の変化を監視
     const { data: authData } = supabase.auth.onAuthStateChange((_, session) => {
-
       setSession(session)
       addAccount(session?.user?.user_metadata.provider_id, session?.user?.user_metadata.full_name)
     })

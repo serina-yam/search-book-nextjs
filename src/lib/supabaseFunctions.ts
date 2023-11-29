@@ -2,8 +2,8 @@ import supabase from '@/lib/supabase'
 
 /**
  * select * from stock where user_id = #{user_id}
- * @param user_id 
- * @returns 
+ * @param user_id
+ * @returns
  */
 export const getAccount = async (id: number) => {
   const { data } = await supabase.from('account').select('*').eq('id', id).single()
@@ -13,16 +13,16 @@ export const getAccount = async (id: number) => {
 
 /**
  * add account table
- * @param name 
- * @param last_login_time 
+ * @param name
+ * @param last_login_time
  */
 export const addAccount = async (id: number, name: string) => {
   // TODO +9hで登録されるようにする
-  const lastLoginTime = new Date().toISOString();
+  const lastLoginTime = new Date().toISOString()
 
   const { data, error } = await supabase
     .from('account')
-    .upsert([{ id:id, name: name, last_login_time: lastLoginTime }])
+    .upsert([{ id: id, name: name, last_login_time: lastLoginTime }])
     .select('*')
 
   if (error) {
@@ -33,8 +33,8 @@ export const addAccount = async (id: number, name: string) => {
 }
 /**
  * select * from stock where user_id = #{user_id}
- * @param user_id 
- * @returns 
+ * @param user_id
+ * @returns
  */
 export const getStockByUserId = async (user_id: number) => {
   const { data: stockData } = await supabase.from('stock').select('*').eq('user_id', user_id)
@@ -44,9 +44,9 @@ export const getStockByUserId = async (user_id: number) => {
 
 /**
  * select * from stock where user_id = #{user_id} and isbn = #{isbn}
- * @param user_id 
- * @param isbn 
- * @returns 
+ * @param user_id
+ * @param isbn
+ * @returns
  */
 export const getStock = async (user_id: number, isbn: string) => {
   const { data: stockData } = await supabase.from('stock').select('*').eq('user_id', user_id).eq('isbn', isbn)
@@ -54,12 +54,11 @@ export const getStock = async (user_id: number, isbn: string) => {
   return stockData
 }
 
-
 /**
- * 
+ *
  * @param user_id
- * @param isbn 
- * @returns 
+ * @param isbn
+ * @returns
  */
 export const addStock = async (user_id: number, isbn: string) => {
   const { error } = await supabase.from('stock').insert([{ user_id: user_id, isbn: isbn }])
@@ -67,16 +66,15 @@ export const addStock = async (user_id: number, isbn: string) => {
 }
 
 /**
- * 
- * @param user_id 
- * @param isbn 
- * @returns 
+ *
+ * @param user_id
+ * @param isbn
+ * @returns
  */
 export const deleteStock = async (user_id: number, isbn: string) => {
   const { error } = await supabase.from('stock').delete().eq('user_id', user_id).eq('isbn', isbn)
   return error
 }
-
 
 export const getLike = async (user_id: number, isbn: string) => {
   const { data: stockData } = await supabase.from('like').select('*').eq('user_id', user_id).eq('isbn', isbn)
@@ -85,10 +83,10 @@ export const getLike = async (user_id: number, isbn: string) => {
 }
 
 /**
- * 
- * @param user_id 
- * @param isbn 
- * @returns 
+ *
+ * @param user_id
+ * @param isbn
+ * @returns
  */
 export const addLike = async (user_id: number, isbn: string) => {
   const { error } = await supabase.from('like').insert([{ user_id: user_id, isbn: isbn }])
@@ -96,10 +94,10 @@ export const addLike = async (user_id: number, isbn: string) => {
 }
 
 /**
- * 
- * @param user_id 
- * @param isbn 
- * @returns 
+ *
+ * @param user_id
+ * @param isbn
+ * @returns
  */
 export const deleteLike = async (user_id: number, isbn: string) => {
   const { data } = await supabase.from('like').delete().eq('user_id', user_id).eq('isbn', isbn).select('*')
@@ -107,9 +105,9 @@ export const deleteLike = async (user_id: number, isbn: string) => {
 }
 
 /**
- * 
- * @param isbn 
- * @returns 
+ *
+ * @param isbn
+ * @returns
  */
 export const getBook = async (isbn: string) => {
   const { data: bookData } = await supabase.from('book').select('*').eq('id', isbn).single()
@@ -119,10 +117,10 @@ export const getBook = async (isbn: string) => {
 
 /**
  * あれば更新, なければ追加
- * @param isbn 
- * @param name 
- * @param thumbnail 
- * @returns 
+ * @param isbn
+ * @param name
+ * @param thumbnail
+ * @returns
  */
 export const addBook = async (isbn: string, name: string, thumbnail: string): Promise<void> => {
   const { data: likeData, error } = await supabase

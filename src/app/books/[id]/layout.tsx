@@ -8,7 +8,6 @@ import LogoutButton from '@/components/logoutButton'
 import supabase from '@/lib/supabase'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-
   useEffect(() => {
     // ログイン状態の変化を監視
     const { data: authData } = supabase.auth.onAuthStateChange((_, session) => {})
