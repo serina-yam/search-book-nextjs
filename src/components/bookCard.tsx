@@ -23,7 +23,7 @@ export default function BookCard({
   authors: string[]
   pageCount: number
   thumbnail: string
-  publisher?: string
+  publisher: string
 }) {
   if (description) {
     if (description.length >= 200) {
