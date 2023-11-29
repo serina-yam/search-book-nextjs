@@ -1,11 +1,45 @@
 'use client'
 
 import { Image } from '@nextui-org/react'
-import Layout from './layout'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import Layout from '@/app/layout'
 import NavigationBar from '@/components/navigationBar'
+import { Tables } from '@/lib/supabase'
+import { getBook } from '@/lib/supabaseFunctions'
 import utilStyles from '@/styles/utils.module.css'
 
-export default function Book({ params }: { params: { slug: string } }) {
+export default function BookPage({ params }: { params: { id: string } }) {
+  const [book, setBook] = useState<Tables<'book'>>()
+  const isbn = params.id;
+
+  useEffect(() => {
+    const fetchBook = async () => {
+      getBook(isbn).then((bookData) => {
+        if (bookData) {
+          setBook(bookData)
+        } else {
+          // DBになかったらAPIから取得
+          // searchBooksByTitle()
+        }
+      })
+    }
+
+    fetchBook()
+  }, [isbn])
+
+  const searchBooksByTitle = async (title: string) => {
+    try {
+      if (title.length === 0) {
+        return []
+      }
+      const response = await axios.get(`${'https://www.googleapis.com/books/v1/volumes'}?q=${title}`)
+      return response.data.items
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <Layout>
       <NavigationBar />
@@ -16,32 +50,32 @@ export default function Book({ params }: { params: { slug: string } }) {
               <Image
                 alt="自転しながら公転する"
                 className="rounded-xl object-cover shadow-lg"
-                src="http://books.google.com/books/content?id=8Nj6DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                src={book?.thumbnail}
                 width={200}
               />
             </div>
             <div>
-              <h2>自転しながら公転する</h2>
-              <dl>
-                <dt>ISBN</dt>
-                <dd>PKEY:BT000084187700100101900209 (OTHER)</dd>
+              <h2>{book?.name}</h2>
+              <dl className="flex">
+                <dt className="w-32">ISBN</dt>
+                <dd>{book?.id}</dd>
               </dl>
-              <dl>
-                <dt>出版社</dt>
-                <dd>新潮</dd>
+              <dl className="flex">
+                <dt className="w-32">出版社</dt>
+                <dd>{book?.publisher}</dd>
               </dl>
-              <dl>
-                <dt>発売日</dt>
-                <dd>2020-09-28</dd>
+              <dl className="flex">
+                <dt className="w-32">発売日</dt>
+                <dd>{book?.published_date}</dd>
               </dl>
-              <dl>
-                <dt>ページ数</dt>
-                <dd>358</dd>
+              <dl className="flex">
+                <dt className="w-32">ページ数</dt>
+                <dd>{book?.page == null || book?.page === 0 ? '' : book?.page}</dd>
               </dl>
             </div>
           </div>
           <div className="mt-12">
-            東京のアパレルで働いていた都は母親の看病のため茨城の実家に戻り、地元のアウトレットのショップで店員として働き始めるが、職場ではセクハラなど問題続出、実家では両親共に体調を崩してしまい……。恋愛、家族の世話、そのうえ仕事もがんばるなんて、そんなこと無理！　ぐるぐる思い惑う都の人生の選択から目が離せない、共感度100％小説。
+            {book?.description}
           </div>
         </div>
       </div>

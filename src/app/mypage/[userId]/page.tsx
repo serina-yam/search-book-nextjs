@@ -2,7 +2,7 @@
 
 import { Avatar } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
-import Layout from '@/app/mypage/[userId]/layout'
+import Layout from '@/app/layout'
 import LogoutButton from '@/components/logoutButton'
 import NavigationBar from '@/components/navigationBar'
 import Stock from '@/components/stock'
@@ -10,10 +10,10 @@ import useAuth from '@/hooks/useAuth'
 import supabase, { DbResultOk, Tables } from '@/lib/supabase'
 import utilStyles from '@/styles/utils.module.css'
 
-export default function Mypage({}: { params: { slug: string } }) {
+export default function Mypage({ params }: { params: { id: string }}) {
   const { profileFromGithub } = useAuth()
   const [books, setBooks] = useState<Tables<'book'>[]>()
-  const userId = 64587946
+  const userId = params.id
   const [lastLoginTime, setLastLoginTime] = useState<string | null | undefined>('')
 
   useEffect(() => {

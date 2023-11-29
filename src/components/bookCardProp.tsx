@@ -29,7 +29,7 @@ export default function BookCardProp({
   authors: string[]
   pageCount: number
   thumbnail: string
-  publisher?: string
+  publisher: string
 }) {
   const [stock, setStock] = useState(false)
   const submitStockProcessing = useRef(false)
@@ -108,7 +108,7 @@ export default function BookCardProp({
 
       // データが存在しないときのみデータ登録
       const bookTitle = title
-      addBook(isbn, bookTitle, thumbnail).then(() => {
+      addBook(isbn, bookTitle, thumbnail, publisher, publishedDate, pageCount, description).then(() => {
         console.log('added book')
       })
     })
@@ -164,7 +164,7 @@ export default function BookCardProp({
           </button>
         )}
       </div>
-      <Link href={`/books/${isbn10}`} className="flex">
+      <Link href={`/books/${isbn}`} className="flex">
         <LinkImg />
         詳細情報
       </Link>
