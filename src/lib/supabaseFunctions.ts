@@ -110,7 +110,7 @@ export const deleteLike = async (user_id: number, isbn: string) => {
  * @returns
  */
 export const getBook = async (isbn: string) => {
-  const { data: bookData } = await supabase.from('book').select('*').eq('id', isbn).single()
+  const { data: bookData, error } = await supabase.from('book').select('*').eq('id', isbn).single()
 
   return bookData
 }
@@ -122,10 +122,27 @@ export const getBook = async (isbn: string) => {
  * @param thumbnail
  * @returns
  */
-export const addBook = async (isbn: string, name: string, thumbnail: string): Promise<void> => {
+export const addBook = async (
+  isbn: string,
+  name: string,
+  thumbnail: string,
+  publisher: string,
+  publishedDate: string,
+  pageCount: number,
+  description: string
+  ): Promise<void> => {
   const { data: likeData, error } = await supabase
     .from('book')
-    .insert([{ id: isbn, name: name, thumbnail: thumbnail }])
+    .insert([
+      { id: isbn,
+        name: name,
+        thumbnail: thumbnail,
+        publisher:publisher,
+        published_date: publishedDate,
+        page: pageCount,
+        description: description
+       }
+    ])
     .select('*')
 
   if (error) {

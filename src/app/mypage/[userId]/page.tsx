@@ -2,7 +2,7 @@
 
 import { Avatar } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
-import Layout from '@/app/mypage/[userId]/layout'
+import Layout from '@/app/layout'
 import LogoutButton from '@/components/logoutButton'
 import NavigationBar from '@/components/navigationBar'
 import Stock from '@/components/stock'
@@ -10,10 +10,10 @@ import useAuth from '@/hooks/useAuth'
 import supabase, { DbResultOk, Tables } from '@/lib/supabase'
 import utilStyles from '@/styles/utils.module.css'
 
-export default function Mypage({}: { params: { slug: string } }) {
+export default function Mypage({ params }: { params: { userId: string }}) {
   const { profileFromGithub } = useAuth()
   const [books, setBooks] = useState<Tables<'book'>[]>()
-  const userId = 64587946
+  const userId = params.userId
   const [lastLoginTime, setLastLoginTime] = useState<string | null | undefined>('')
 
   useEffect(() => {
@@ -68,7 +68,16 @@ export default function Mypage({}: { params: { slug: string } }) {
           <div className="grid grid-cols-2 items-start gap-2 sm:grid-cols-2">
             {books &&
               books.map((book: Tables<'book'>) => (
-                <Stock key={book.id} isbn={book.id} title={book.name} thumbnail={book.thumbnail} />
+                <Stock 
+                  key={book.id}
+                  isbn={book.id}
+                  title={book.name}
+                  thumbnail={book.thumbnail}
+                  publisher={book.publisher}
+                  publishedDate={book.published_date}
+                  pageCount={book.page}
+                  description={book.description}
+                   />
               ))}
           </div>
         </div>
