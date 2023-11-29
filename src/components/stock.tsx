@@ -5,7 +5,7 @@ import { BookmarkCheck } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, useRef } from 'react'
-import AlertModal from './AlertModal'
+import AlertModal from './alertModal'
 import useAuth from '@/hooks/useAuth'
 import { addBook, addStock, deleteStock, getBook } from '@/lib/supabaseFunctions'
 

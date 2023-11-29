@@ -3,7 +3,7 @@
 import axios from 'axios'
 import { useRef, useState } from 'react'
 import Layout from '@/app/layout'
-import BookCard from '@/components/BookCard'
+import BookCard from '@/components/bookCard'
 import NavigationBar from '@/components/navigationBar'
 import SearchBar from '@/components/searchBar'
 import utilStyles from '@/styles/utils.module.css'
