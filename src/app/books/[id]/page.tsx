@@ -45,8 +45,8 @@ export default function BookPage({ params }: { params: { id: string } }) {
       <NavigationBar />
       <div className="mt-12 h-full rounded-xl bg-slate-50 p-12">
         <div className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-          <div className="flex items-center justify-center">
-            <div className="w-1/3">
+          <div className="flex flex-col items-center justify-center sm:flex-row">
+            <div className="flex w-full justify-center sm:w-1/3">
               <Image
                 alt="自転しながら公転する"
                 className="rounded-xl object-cover shadow-lg"
