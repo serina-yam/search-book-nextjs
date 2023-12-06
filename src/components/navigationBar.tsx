@@ -1,13 +1,14 @@
 import { Avatar, Navbar, NavbarBrand, NavbarItem } from '@nextui-org/react'
 import { MoonStar, LibraryBig } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
 import LoginButton from '@/components/loginButton'
-import useAuth from '@/hooks/useAuth'
+import { useAuth } from '@/hooks/authProvider'
+
 
 export default function NavigationBar() {
-  const { profileFromGithub } = useAuth()
-  const { session: isLogin } = useAuth()
+  const contextValue = useAuth();
+  const profileFromGithub = contextValue?.profileFromGithub
+  const isLogin = contextValue?.session ? true : false
 
   return (
     <>
@@ -24,15 +25,15 @@ export default function NavigationBar() {
         <NavbarItem>
           {isLogin ? (
             <>
-              <Link className="flex" href={`/mypage/${profileFromGithub.id}`}>
+              <Link className="flex" href={`/mypage/${profileFromGithub?.id}`}>
                 <div className="cursor-pointer">
                   <Avatar
                     isBordered
                     as="button"
                     className="mr-4 transition-transform"
-                    name={profileFromGithub.fullName}
+                    name={profileFromGithub?.fullName}
                     size="sm"
-                    src={profileFromGithub.avatarUrl}
+                    src={profileFromGithub?.avatarUrl}
                   />
                 </div>
               </Link>

@@ -1,10 +1,12 @@
 'use client'
 import { Button } from '@nextui-org/react'
 import { LogIn } from 'lucide-react'
-import useAuth from '@/hooks/useAuth'
+import { useAuth } from '@/hooks/authProvider'
 
 const LoginButton = () => {
-  const { signInWithGithub, error } = useAuth()
+  const contextValue = useAuth()
+  const signInWithGithub = contextValue?.signInWithGithub
+  const error = contextValue?.error
 
   return (
     <div>

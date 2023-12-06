@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, useRef } from 'react'
 import AlertModal from './alertModal'
-import useAuth from '@/hooks/useAuth'
+import { useAuth } from '@/hooks/authProvider'
 import { addBook, addStock, deleteStock, getBook } from '@/lib/supabaseFunctions'
 
 export default function Stock({
@@ -30,17 +30,19 @@ export default function Stock({
   const submitStockProcessing = useRef(false)
   const [loadingStock, setLoadingStock] = useState(false)
 
-  const { profileFromGithub } = useAuth()
-  const userId = profileFromGithub.id // ユーザーIDの状態
-  const [isbnState, setIsbnState] = useState(isbn) // ISBNの状態
+  const profileFromGithub = useAuth()?.profileFromGithub
+  const userId: number = profileFromGithub?.id ?? 0;
+  const [isbnState, setIsbnState] = useState(isbn)
 
   const router = useRouter()
   const [modalOpen, setModalOpen] = useState(false)
 
   const onAddStock = () => {
+    if (userId === 0) return
     // 連続送信中止
     if (submitStockProcessing.current) return
     submitStockProcessing.current = true
+
 
     setLoadingStock(true)
     addStock(userId, isbn)
@@ -82,6 +84,8 @@ export default function Stock({
   }
 
   const onDeleteStock = () => {
+    if (userId === 0) return
+    // 連続送信中止
     if (submitStockProcessing.current) return
     submitStockProcessing.current = true
 
@@ -102,7 +106,7 @@ export default function Stock({
   }
 
   const handleDelete = () => {
-    if (!userId || !isbnState) return setModalOpen(false) // 必要な情報がない場合は処理しない
+    if (userId === 0 || !userId || !isbnState) return setModalOpen(false) // 必要な情報がない場合は処理しない
     onDeleteStock()
   }
 

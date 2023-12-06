@@ -6,25 +6,19 @@ import Layout from '@/app/layout'
 import LogoutButton from '@/components/logoutButton'
 import NavigationBar from '@/components/navigationBar'
 import Stock from '@/components/stock'
-import useAuth from '@/hooks/useAuth'
+import { useAuth } from '@/hooks/authProvider'
 import supabase, { DbResultOk, Tables } from '@/lib/supabase'
 import utilStyles from '@/styles/utils.module.css'
 
+
 export default function Mypage({ params }: { params: { userId: string }}) {
-  const { profileFromGithub } = useAuth()
+  const profileFromGithub = useAuth()?.profileFromGithub
+
+
   const [books, setBooks] = useState<Tables<'book'>[]>()
   const userId = params.userId
-  const [lastLoginTime, setLastLoginTime] = useState<string | null | undefined>('')
 
   useEffect(() => {
-    // getAccount(user_id)
-    //   .then((data) => {
-    //     const timestamp = data?.last_login_time; // Supabaseから取得したタイムスタンプ
-    //     if (timestamp !== null && timestamp !== undefined) {
-    //       const japanTime = new Date(timestamp).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
-    //       setLastLoginTime(japanTime)
-    //     }
-    //   })
     fetchStocks()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -55,11 +49,11 @@ export default function Mypage({ params }: { params: { userId: string }}) {
           <div className="flex items-center">
             <Avatar
               className="mr-2 transition-transform"
-              name={profileFromGithub.fullName}
+              name={profileFromGithub?.fullName}
               size="sm"
-              src={profileFromGithub.avatarUrl}
+              src={profileFromGithub?.avatarUrl}
             />
-            <h2>{profileFromGithub.fullName}さんの本棚</h2>
+            <h2>{profileFromGithub?.fullName}さんの本棚</h2>
           </div>
           {/* <div>最終ログイン日時：{lastLoginTime}</div> */}
           <LogoutButton />
