@@ -5,37 +5,6 @@ import supabase from '@/lib/supabase'
  * @param user_id
  * @returns
  */
-export const getAccount = async (id: number) => {
-  const { data } = await supabase.from('account').select('*').eq('id', id).single()
-
-  return data
-}
-
-/**
- * add account table
- * @param name
- * @param last_login_time
- */
-export const addAccount = async (id: number, name: string) => {
-  // TODO +9hで登録されるようにする
-  const lastLoginTime = new Date().toISOString()
-
-  const { data, error } = await supabase
-    .from('account')
-    .upsert([{ id: id, name: name, last_login_time: lastLoginTime }])
-    .select('*')
-
-  if (error) {
-    alert(error.message)
-  }
-
-  return data
-}
-/**
- * select * from stock where user_id = #{user_id}
- * @param user_id
- * @returns
- */
 export const getStockByUserId = async (user_id: number) => {
   const { data: stockData } = await supabase.from('stock').select('*').eq('user_id', user_id)
 

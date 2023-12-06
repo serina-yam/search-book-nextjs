@@ -1,10 +1,8 @@
 'use client'
 
 import '../styles/global.css'
-import { Session } from '@supabase/supabase-js'
-import { useEffect, useState } from 'react'
 import styles from '@/app/layout.module.css'
-import supabase from '@/lib/supabase'
+import { AuthProvider } from '@/hooks/authProvider'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   // const [session, setSession] = useState<Session | null>(null) // ログイン状態を管理
@@ -23,7 +21,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="Let's search for books" />
       </head>
-      <body className={styles.container}>{children}</body>
+      
+      <body className={styles.container}>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
     </html>
   )
 }

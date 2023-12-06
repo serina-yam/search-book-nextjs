@@ -48,7 +48,7 @@ export default function BookPage({ params }: { params: { id: string } }) {
           <div className="flex flex-col items-center justify-center sm:flex-row">
             <div className="flex w-full justify-center sm:w-1/3">
               <Image
-                alt="自転しながら公転する"
+                alt={book?.name}
                 className="rounded-xl object-cover shadow-lg"
                 src={book?.thumbnail}
                 width={200}

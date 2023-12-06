@@ -5,7 +5,7 @@ import { Link as LinkImg, BookmarkPlus, BookmarkCheck } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { Loader } from './loader'
-import useAuth from '@/hooks/useAuth'
+import { useAuth } from '@/hooks/authProvider'
 import { addBook, addStock, deleteStock, getBook, getStock } from '@/lib/supabaseFunctions'
 
 export default function BookCardProp({
@@ -34,14 +34,16 @@ export default function BookCardProp({
   const [stock, setStock] = useState(false)
   const submitStockProcessing = useRef(false)
   const [loadingStock, setLoadingStock] = useState(false)
-
-  const { profileFromGithub } = useAuth()
-  const userId = profileFromGithub.id
   const isbn = isbn13 ? isbn13 : isbn10
+
+  const profileFromGithub = useAuth()?.profileFromGithub
+  const userId: number = profileFromGithub?.id ?? 0;
 
   useEffect(() => {
     // データを取得する処理を行う関数
     const fetchStock = async () => {
+      if (userId == null) return
+      
       getStock(userId, isbn).then((stockData) => {
         if (stockData == null || stockData?.length == 0) {
           setStock(false)
@@ -149,25 +151,27 @@ export default function BookCardProp({
         <dd className="w-3/4">{pageCount}</dd>
       </dl>
 
-      <div>
+      <div className="mt-6 flex">
         {loadingStock ? (
           <button>
             <Loader />
           </button>
         ) : stock ? (
-          <button onClick={onDeleteStock}>
+          <button onClick={onDeleteStock} className="flex">
             <BookmarkCheck color="#eb4667" />
+            <div>削除する</div>
           </button>
         ) : (
-          <button onClick={onAddStock}>
+          <button onClick={onAddStock} className="flex">
             <BookmarkPlus color="#bdbdbd" />
+            <div>ストックする</div>
           </button>
         )}
-      </div>
-      <Link href={`/books/${isbn}`} className="flex">
+      <Link href={`/books/${isbn}`} className="ml-6 flex">
         <LinkImg />
         詳細情報
       </Link>
+      </div>
     </div>
   )
 }
