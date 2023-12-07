@@ -13,8 +13,6 @@ import utilStyles from '@/styles/utils.module.css'
 
 export default function Mypage({ params }: { params: { userId: string }}) {
   const profileFromGithub = useAuth()?.profileFromGithub
-
-
   const [books, setBooks] = useState<Tables<'book'>[]>()
   const userId = params.userId
 
@@ -55,7 +53,6 @@ export default function Mypage({ params }: { params: { userId: string }}) {
             />
             <h2>{profileFromGithub?.fullName}さんの本棚</h2>
           </div>
-          {/* <div>最終ログイン日時：{lastLoginTime}</div> */}
           <LogoutButton />
         </div>
         <div className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>

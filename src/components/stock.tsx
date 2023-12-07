@@ -28,60 +28,11 @@ export default function Stock({
 }) {
   const [stock, setStock] = useState(false)
   const submitStockProcessing = useRef(false)
-  const [loadingStock, setLoadingStock] = useState(false)
 
   const profileFromGithub = useAuth()?.profileFromGithub
   const userId: number = profileFromGithub?.id ?? 0;
   const [isbnState, setIsbnState] = useState(isbn)
-
-  const router = useRouter()
   const [modalOpen, setModalOpen] = useState(false)
-
-  const onAddStock = () => {
-    if (userId === 0) return
-    // 連続送信中止
-    if (submitStockProcessing.current) return
-    submitStockProcessing.current = true
-
-
-    setLoadingStock(true)
-    addStock(userId, isbn)
-      .then(() => {
-        setStock(true)
-
-        // book情報なければ登録
-        addBookDataNonExists()
-
-        setLoadingStock(false)
-        submitStockProcessing.current = false
-      })
-      .catch((error) => {
-        console.error(error)
-        setStock(false)
-        setLoadingStock(false)
-        submitStockProcessing.current = false
-      })
-  }
-
-  const addBookDataNonExists = async () => {
-    getBook(isbn).then((bookData) => {
-      if (!!bookData) {
-        // eslint-disable-next-line no-console
-        console.info('Data already exists')
-        return
-      }
-
-      // データが存在しないときのみデータ登録
-      addBook(
-        isbn, title ?? '', thumbnail ?? '',
-        publisher ?? '', publishedDate ?? '',
-        pageCount ?? 0, description ?? ''
-        ).then(() => {
-        // eslint-disable-next-line no-console
-        console.log('added book')
-      })
-    })
-  }
 
   const onDeleteStock = () => {
     if (userId === 0) return
