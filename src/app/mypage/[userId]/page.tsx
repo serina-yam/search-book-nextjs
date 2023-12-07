@@ -23,14 +23,14 @@ export default function Mypage({ params }: { params: { userId: string }}) {
 
   // ユーザーの本棚情報取得
   const fetchStocks = async () => {
-    const { data: stockData } = await supabase.from('stock').select('isbn').eq('user_id', userId)
-    const isbnArray = stockData
-      ?.map((item: any) => item.isbn)
-      .filter((isbn: any) => typeof isbn === 'string') as string[]
+    const { data: stockData } = await supabase.from('stock').select('book_id').eq('user_id', userId)
+    const bookIdArray = stockData
+      ?.map((item: any) => item.book_id)
+      .filter((bookId: any) => typeof bookId === 'string') as string[]
 
-    if (isbnArray === undefined || isbnArray.length === 0) return
+    if (bookIdArray === undefined || bookIdArray.length === 0) return
 
-    const stocksByUserQuery = supabase.from('book').select('*').in('id', isbnArray).returns<Tables<'book'>[]>()
+    const stocksByUserQuery = supabase.from('book').select('*').in('id', bookIdArray).returns<Tables<'book'>[]>()
 
     type stocksByUser = DbResultOk<typeof stocksByUserQuery>
     const { data, error } = await stocksByUserQuery
@@ -61,7 +61,8 @@ export default function Mypage({ params }: { params: { userId: string }}) {
               books.map((book: Tables<'book'>) => (
                 <Stock 
                   key={book.id}
-                  isbn={book.id}
+                  id={book.id}
+                  isbn={book.isbn}
                   title={book.name}
                   thumbnail={book.thumbnail}
                   publisher={book.publisher}

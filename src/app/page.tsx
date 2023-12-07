@@ -1,11 +1,11 @@
 'use client'
 
-import axios from 'axios'
 import { useRef, useState } from 'react'
 import Layout from '@/app/layout'
 import BookCard from '@/components/bookCard'
 import NavigationBar from '@/components/navigationBar'
 import SearchBar from '@/components/searchBar'
+import { searchBooksByTitle } from '@/lib/fetchGoogle'
 import utilStyles from '@/styles/utils.module.css'
 import BookInfo from '@/types/bookInfo'
 
@@ -40,17 +40,7 @@ export default function Home() {
       })
   }
 
-  const searchBooksByTitle = async (title: string) => {
-    try {
-      if (title.length === 0) {
-        return []
-      }
-      const response = await axios.get(`${'https://www.googleapis.com/books/v1/volumes'}?q=${title}`)
-      return response.data.items
-    } catch (error) {
-      console.error(error)
-    }
-  }
+
 
   // // ヘッダの背景色変更
   // const [isVisible, setIsVisible] = useState(false)

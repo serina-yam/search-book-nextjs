@@ -1,15 +1,15 @@
 'use client'
 
-import { Card, CardBody, Image, CardFooter, CardHeader, useDisclosure } from '@nextui-org/react'
+import { Card, CardBody, Image, CardFooter, CardHeader } from '@nextui-org/react'
 import { BookmarkCheck } from 'lucide-react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useState, useRef } from 'react'
 import AlertModal from './alertModal'
 import { useAuth } from '@/hooks/authProvider'
-import { addBook, addStock, deleteStock, getBook } from '@/lib/supabaseFunctions'
+import { deleteStock } from '@/lib/supabaseFunctions'
 
 export default function Stock({
+  id,
   isbn,
   title,
   thumbnail,
@@ -18,7 +18,8 @@ export default function Stock({
   pageCount,
   description
 }: {
-  isbn: string
+  id: string
+  isbn: string | null
   title: string | null
   thumbnail: string | null
   publisher: string | null
@@ -31,7 +32,7 @@ export default function Stock({
 
   const profileFromGithub = useAuth()?.profileFromGithub
   const userId: number = profileFromGithub?.id ?? 0;
-  const [isbnState, setIsbnState] = useState(isbn)
+  const [idState, setIdState] = useState(isbn)
   const [modalOpen, setModalOpen] = useState(false)
 
   const onDeleteStock = () => {
@@ -40,7 +41,8 @@ export default function Stock({
     if (submitStockProcessing.current) return
     submitStockProcessing.current = true
 
-    deleteStock(userId, isbnState)
+    if (idState == null) return
+    deleteStock(userId, idState)
       .then(() => {
         setStock(false)
         submitStockProcessing.current = false
@@ -57,7 +59,7 @@ export default function Stock({
   }
 
   const handleDelete = () => {
-    if (userId === 0 || !userId || !isbnState) return setModalOpen(false) // 必要な情報がない場合は処理しない
+    if (userId === 0 || !userId || !idState) return setModalOpen(false) // 必要な情報がない場合は処理しない
     onDeleteStock()
   }
 
@@ -67,14 +69,14 @@ export default function Stock({
         <CardHeader className="flex justify-end pr-7">
           <button
             onClick={() => {
-              setIsbnState(isbn)
+              setIdState(id)
               setModalOpen(true)
             }}
           >
             <BookmarkCheck color="#eb4667" />
           </button>
         </CardHeader>
-        <Link href={`/books/${isbn}`} className="flex">
+        <Link href={`/books/${id}`} className="flex">
           <CardBody className="items-center overflow-visible py-2">
             <Image alt={title} className="rounded-xl object-cover shadow-lg" src={thumbnail} width={128} />
           </CardBody>
@@ -89,7 +91,7 @@ export default function Stock({
         onClose={() => setModalOpen(false)}
         onDelete={handleDelete}
         userId={userId}
-        isbn={isbn}
+        isbn={isbn} 
       />
     </>
   )

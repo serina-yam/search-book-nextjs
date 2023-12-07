@@ -44,7 +44,7 @@ export default function BookCardProp({
     const fetchStock = async () => {
       if (userId == null) return
       
-      getStock(userId, isbn).then((stockData) => {
+      getStock(userId, id).then((stockData) => {
         if (stockData == null || stockData?.length == 0) {
           setStock(false)
         } else {
@@ -58,12 +58,17 @@ export default function BookCardProp({
   }, [])
 
   const onAddStock = () => {
+    if (userId === 0) {
+      alert('ログインしてください')
+      return
+    }
+
     // 連続送信中止
     if (submitStockProcessing.current) return
     submitStockProcessing.current = true
 
     setLoadingStock(true)
-    addStock(userId, isbn)
+    addStock(userId, id, isbn)
       .then(() => {
         setStock(true)
 
@@ -82,12 +87,17 @@ export default function BookCardProp({
   }
 
   const onDeleteStock = () => {
+    if (userId === 0) {
+      alert('ログインしてください')
+      return
+    }
+
     // 連続送信中止
     if (submitStockProcessing.current) return
     submitStockProcessing.current = true
 
     setLoadingStock(true)
-    deleteStock(userId, isbn13)
+    deleteStock(userId, id)
       .then(() => {
         setStock(false)
         setLoadingStock(false)
@@ -102,7 +112,7 @@ export default function BookCardProp({
   }
 
   const addBookDataNonExists = async () => {
-    getBook(isbn).then((bookData) => {
+    getBook(id).then((bookData) => {
       if (!!bookData) {
         console.info('Data already exists')
         return
@@ -110,7 +120,7 @@ export default function BookCardProp({
 
       // データが存在しないときのみデータ登録
       const bookTitle = title
-      addBook(isbn, bookTitle, thumbnail, publisher, publishedDate, pageCount, description).then(() => {
+      addBook(id, isbn, bookTitle, thumbnail, publisher, publishedDate, pageCount, description).then(() => {
         console.log('added book')
       })
     })
@@ -167,7 +177,7 @@ export default function BookCardProp({
             <div>ストックする</div>
           </button>
         )}
-      <Link href={`/books/${isbn}`} className="ml-6 flex">
+      <Link href={`/books/${id}`} className="ml-6 flex">
         <LinkImg />
         詳細情報
       </Link>

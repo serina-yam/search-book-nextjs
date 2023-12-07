@@ -5,7 +5,7 @@ interface ModalComponentProps {
   onClose: () => void
   onDelete: () => void // ページ内で削除処理を定義する関数
   userId: number
-  isbn: string
+  isbn: string | null
 }
 
 const AlertModal: React.FC<ModalComponentProps> = ({ isOpen, onClose, onDelete }) => {
