@@ -17,8 +17,8 @@ export const getStockByUserId = async (user_id: number) => {
  * @param isbn
  * @returns
  */
-export const getStock = async (user_id: number, isbn: string) => {
-  const { data: stockData } = await supabase.from('stock').select('*').eq('user_id', user_id).eq('isbn', isbn)
+export const getStock = async (user_id: number, id: string) => {
+  const { data: stockData } = await supabase.from('stock').select('*').eq('user_id', user_id).eq('book_id', id)
 
   return stockData
 }
@@ -29,57 +29,29 @@ export const getStock = async (user_id: number, isbn: string) => {
  * @param isbn
  * @returns
  */
-export const addStock = async (user_id: number, isbn: string) => {
-  const { error } = await supabase.from('stock').insert([{ user_id: user_id, isbn: isbn }])
+export const addStock = async (user_id: number, id: string, isbn: string) => {
+  const { error } = await supabase.from('stock').insert([{ user_id: user_id, book_id: id, isbn: isbn }])
   return error
 }
 
 /**
  *
  * @param user_id
- * @param isbn
+ * @param id
  * @returns
  */
-export const deleteStock = async (user_id: number, isbn: string) => {
-  const { error } = await supabase.from('stock').delete().eq('user_id', user_id).eq('isbn', isbn)
-  return error
-}
-
-export const getLike = async (user_id: number, isbn: string) => {
-  const { data: stockData } = await supabase.from('like').select('*').eq('user_id', user_id).eq('isbn', isbn)
-
-  return stockData
-}
-
-/**
- *
- * @param user_id
- * @param isbn
- * @returns
- */
-export const addLike = async (user_id: number, isbn: string) => {
-  const { error } = await supabase.from('like').insert([{ user_id: user_id, isbn: isbn }])
+export const deleteStock = async (user_id: number, id: string) => {
+  const { error } = await supabase.from('stock').delete().eq('user_id', user_id).eq('book_id', id)
   return error
 }
 
 /**
  *
- * @param user_id
  * @param isbn
  * @returns
  */
-export const deleteLike = async (user_id: number, isbn: string) => {
-  const { data } = await supabase.from('like').delete().eq('user_id', user_id).eq('isbn', isbn).select('*')
-  return data
-}
-
-/**
- *
- * @param isbn
- * @returns
- */
-export const getBook = async (isbn: string) => {
-  const { data: bookData, error } = await supabase.from('book').select('*').eq('id', isbn).single()
+export const getBook = async (id: string) => {
+  const { data: bookData, error } = await supabase.from('book').select('*').eq('id', id).single()
 
   return bookData
 }
@@ -92,6 +64,7 @@ export const getBook = async (isbn: string) => {
  * @returns
  */
 export const addBook = async (
+  id: string,
   isbn: string,
   name: string,
   thumbnail: string,
@@ -102,8 +75,9 @@ export const addBook = async (
   ): Promise<void> => {
   const { data: likeData, error } = await supabase
     .from('book')
-    .insert([
-      { id: isbn,
+    .upsert([
+      { id: id,
+        isbn: isbn,
         name: name,
         thumbnail: thumbnail,
         publisher:publisher,

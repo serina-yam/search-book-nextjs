@@ -1,44 +1,59 @@
 'use client'
 
 import { Image } from '@nextui-org/react'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Layout from '@/app/layout'
 import NavigationBar from '@/components/navigationBar'
+import { searchBookById } from '@/lib/fetchGoogle'
 import { Tables } from '@/lib/supabase'
-import { getBook } from '@/lib/supabaseFunctions'
+import { addBook, getBook } from '@/lib/supabaseFunctions'
 import utilStyles from '@/styles/utils.module.css'
 
 export default function BookPage({ params }: { params: { id: string } }) {
   const [book, setBook] = useState<Tables<'book'>>()
-  const isbn = params.id;
+  const id = params.id;
+  const submitProcessing = useRef(false)
 
   useEffect(() => {
     const fetchBook = async () => {
-      getBook(isbn).then((bookData) => {
+      getBook(id).then((bookData) => {
         if (bookData) {
           setBook(bookData)
         } else {
-          // DBになかったらAPIから取得
-          // searchBooksByTitle()
+          searchBookById(id)
+            .then((result) => {
+              if (result) {
+                const isbn = result.volumeInfo.industryIdentifiers[0]?.identifier ? result.volumeInfo.industryIdentifiers[0]?.identifier : result.volumeInfo.industryIdentifiers[1]?.identifier
+                
+                // 1回だけ登録するようにする
+                if (submitProcessing.current) return
+                submitProcessing.current = true
+                addBook(result.id, isbn, result.volumeInfo.title, result.volumeInfo.imageLinks?.thumbnail, result.volumeInfo.publisher, result.volumeInfo.publishedDate, result.volumeInfo.pageCount, result.volumeInfo.description)
+                
+                const newBook = {
+                  id: id,
+                  description: result.volumeInfo.description,
+                  isbn: isbn,
+                  name: result.volumeInfo.title,
+                  page: result.volumeInfo.pageCount,
+                  published_date: result.volumeInfo.publishedDate,
+                  publisher: result.volumeInfo.publisher,
+                  thumbnail: result.volumeInfo.imageLinks?.thumbnail,
+                  created_at: '',
+              };
+                
+                setBook(newBook)
+              }
+            })
+            .catch((error) => {
+              console.error(error)
+            })
         }
       })
     }
 
     fetchBook()
-  }, [isbn])
-
-  const searchBooksByTitle = async (title: string) => {
-    try {
-      if (title.length === 0) {
-        return []
-      }
-      const response = await axios.get(`${'https://www.googleapis.com/books/v1/volumes'}?q=${title}`)
-      return response.data.items
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  }, [id])
 
   return (
     <Layout>
@@ -58,7 +73,7 @@ export default function BookPage({ params }: { params: { id: string } }) {
               <h2>{book?.name}</h2>
               <dl className="flex">
                 <dt className="w-32">ISBN</dt>
-                <dd>{book?.id}</dd>
+                <dd>{book?.isbn}</dd>
               </dl>
               <dl className="flex">
                 <dt className="w-32">出版社</dt>
@@ -82,3 +97,4 @@ export default function BookPage({ params }: { params: { id: string } }) {
     </Layout>
   )
 }
+
