@@ -62,7 +62,9 @@ export default function Mypage({ params }: { params: { userId: string }}) {
                 <Stock 
                   key={book.id}
                   id={book.id}
-                  isbn={book.isbn}
+                  industryIdentifier={book.industryIdentifier}
+                  isbn13={book.isbn13}
+                  isbn10={book.isbn10}
                   title={book.name}
                   author={book.author}
                   thumbnail={book.thumbnail}
