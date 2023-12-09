@@ -24,6 +24,7 @@ export default function Home() {
       setSearchWord(searchWord)
     }
 
+    // throw new Error('テストエラー');
   }, [searchWord, setSearchWord])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +72,7 @@ export default function Home() {
       <NavigationBar />
       <main>
         {/* <div className={`${utilStyles.headingMd} ${isVisible ? utilStyles.stickyBg : ''} sticky top-0`}> */}
-        <div className={`${utilStyles.headingMd}`}>
+        <div className={utilStyles.headingMd}>
           <div className={utilStyles.container}>
             <h2 className="pb-2 text-center">
               <div className="flex flex-col justify-center sm:flex-row">
