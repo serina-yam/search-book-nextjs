@@ -32,10 +32,13 @@ export interface Database {
       }
       book: {
         Row: {
+          author: string | null
           created_at: string
           description: string | null
           id: string
-          isbn: string | null
+          industryIdentifier: string | null
+          isbn10: string | null
+          isbn13: string | null
           name: string | null
           page: number | null
           published_date: string | null
@@ -43,10 +46,13 @@ export interface Database {
           thumbnail: string | null
         }
         Insert: {
+          author?: string | null
           created_at?: string
           description?: string | null
           id: string
-          isbn?: string | null
+          industryIdentifier?: string | null
+          isbn10?: string | null
+          isbn13?: string | null
           name?: string | null
           page?: number | null
           published_date?: string | null
@@ -54,10 +60,13 @@ export interface Database {
           thumbnail?: string | null
         }
         Update: {
+          author?: string | null
           created_at?: string
           description?: string | null
           id?: string
-          isbn?: string | null
+          industryIdentifier?: string | null
+          isbn10?: string | null
+          isbn13?: string | null
           name?: string | null
           page?: number | null
           published_date?: string | null

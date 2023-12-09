@@ -95,8 +95,18 @@ export default function Home() {
                 key={book.id}
                 id={book.id}
                 title={book.volumeInfo.title}
-                isbn10={book.volumeInfo.industryIdentifiers[0]?.identifier}
-                isbn13={book.volumeInfo.industryIdentifiers[1]?.identifier}
+                industryIdentifier={
+                  book.volumeInfo.industryIdentifiers && book.volumeInfo.industryIdentifiers.length > 0 && book.volumeInfo.industryIdentifiers[0].identifier.includes("PKEY")
+                    ? book.volumeInfo.industryIdentifiers[0].identifier.replace('PKEY:', '')
+                    : ''}
+                isbn10={
+                  book.volumeInfo.industryIdentifiers && book.volumeInfo.industryIdentifiers.length > 0 && !book.volumeInfo.industryIdentifiers[0].identifier.includes("PKEY")
+                    ? book.volumeInfo.industryIdentifiers[0].identifier
+                    : ''}
+                isbn13={
+                  book.volumeInfo.industryIdentifiers && book.volumeInfo.industryIdentifiers.length > 1
+                    ? book.volumeInfo.industryIdentifiers[1].identifier
+                    : ''}
                 description={book.volumeInfo.description}
                 publishedDate={book.volumeInfo.publishedDate}
                 authors={book.volumeInfo.authors}

@@ -10,8 +10,11 @@ import { deleteStock } from '@/lib/supabaseFunctions'
 
 export default function Stock({
   id,
-  isbn,
+  industryIdentifier,
+  isbn10,
+  isbn13,
   title,
+  author,
   thumbnail,
   publisher,
   publishedDate,
@@ -19,8 +22,11 @@ export default function Stock({
   description
 }: {
   id: string
-  isbn: string | null
+  industryIdentifier: string | null
+  isbn10: string | null
+  isbn13: string | null
   title: string | null
+  author: string | null
   thumbnail: string | null
   publisher: string | null
   publishedDate: string | null
@@ -32,7 +38,7 @@ export default function Stock({
 
   const profileFromGithub = useAuth()?.profileFromGithub
   const userId: number = profileFromGithub?.id ?? 0;
-  const [idState, setIdState] = useState(isbn)
+  const [idState, setIdState] = useState(id)
   const [modalOpen, setModalOpen] = useState(false)
 
   const onDeleteStock = () => {
@@ -65,33 +71,33 @@ export default function Stock({
 
   return (
     <>
-      <Card className="h-full cursor-pointer rounded-xl bg-slate-50 py-4">
-        <CardHeader className="flex justify-end pr-7">
-          <button
-            onClick={() => {
-              setIdState(id)
-              setModalOpen(true)
-            }}
-          >
-            <BookmarkCheck color="#eb4667" />
-          </button>
-        </CardHeader>
-        <Link href={`/books/${id}`} className="flex">
-          <CardBody className="items-center overflow-visible py-2">
-            <Image alt={title} className="rounded-xl object-cover shadow-lg" src={thumbnail} width={128} />
-          </CardBody>
+      <Card className="h-full rounded-xl bg-slate-50 py-4">
+          <CardHeader className="flex justify-end pr-7">
+            <button
+              onClick={() => {
+                setIdState(id)
+                setModalOpen(true)
+              }}
+            >
+              <BookmarkCheck color="#eb4667" />
+            </button>
+          </CardHeader>
+          <div className="flex flex-col">
+            <CardBody className="items-center overflow-visible py-2">
+              <Link href={`/books/${id}`}>
+                <Image alt={title} className="rounded-xl object-cover shadow-lg" src={thumbnail} height={190} />
+              </Link>
+            </CardBody>
           <CardFooter className="flex-col items-start px-4 pb-0 pt-2">
-            <div>ISBN:{isbn}</div>
-            <div>Title:{title}</div>
+            <div>{title}</div>
+            <div className="text-sm">{author}</div>
           </CardFooter>
-        </Link>
+          </div>
       </Card>
       <AlertModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         onDelete={handleDelete}
-        userId={userId}
-        isbn={isbn} 
       />
     </>
   )

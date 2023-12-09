@@ -11,6 +11,7 @@ import { addBook, addStock, deleteStock, getBook, getStock } from '@/lib/supabas
 export default function BookCardProp({
   id,
   title,
+  industryIdentifier,
   isbn10,
   isbn13,
   description,
@@ -22,6 +23,7 @@ export default function BookCardProp({
 }: {
   id: string
   title: string
+  industryIdentifier: string
   isbn10: string
   isbn13: string
   description: string
@@ -34,10 +36,10 @@ export default function BookCardProp({
   const [stock, setStock] = useState(false)
   const submitStockProcessing = useRef(false)
   const [loadingStock, setLoadingStock] = useState(false)
-  const isbn = isbn13 ? isbn13 : isbn10
 
   const profileFromGithub = useAuth()?.profileFromGithub
   const userId: number = profileFromGithub?.id ?? 0;
+  const isbn = isbn13 ? isbn13 : (isbn10 ? isbn10 : industryIdentifier)
 
   useEffect(() => {
     // データを取得する処理を行う関数
@@ -120,7 +122,8 @@ export default function BookCardProp({
 
       // データが存在しないときのみデータ登録
       const bookTitle = title
-      addBook(id, isbn, bookTitle, thumbnail, publisher, publishedDate, pageCount, description).then(() => {
+      const author = authors ? authors.join(', ') : null;
+      addBook(id, industryIdentifier, isbn10, isbn13, bookTitle, thumbnail, publisher, publishedDate, pageCount, description, author).then(() => {
         console.log('added book')
       })
     })
@@ -144,14 +147,23 @@ export default function BookCardProp({
         <dt className="w-36">あらすじ:</dt>
         <dd className="w-3/4">{description}</dd>
       </dl>
-      <dl className="flex">
-        <dt className="w-36">ISBN10:</dt>
-        <dd className="w-3/4">{isbn10}</dd>
-      </dl>
-      <dl className="flex">
-        <dt className="w-36">ISBN13:</dt>
-        <dd className="w-3/4">{isbn13}</dd>
-      </dl>
+      {industryIdentifier != '' ? 
+          <dl className="flex">
+            <dt className="w-36">PKEY:</dt>
+            <dd className="w-3/4">{industryIdentifier}</dd>
+          </dl>
+        :
+          <>
+            <dl className="flex">
+              <dt className="w-36">ISBN10:</dt>
+              <dd className="w-3/4">{isbn10}</dd>
+            </dl>
+            <dl className="flex">
+              <dt className="w-36">ISBN13:</dt>
+              <dd className="w-3/4">{isbn13}</dd>
+            </dl>
+          </>
+      }
       <dl className="flex">
         <dt className="w-36">発売日:</dt>
         <dd className="w-3/4">{publishedDate}</dd>

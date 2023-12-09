@@ -5,6 +5,7 @@ import BookCardProp from '@/components/bookCardProp'
 export default function BookCard({
   id,
   title,
+  industryIdentifier,
   isbn10,
   isbn13,
   description,
@@ -16,6 +17,7 @@ export default function BookCard({
 }: {
   id: string
   title: string
+  industryIdentifier: string
   isbn10: string
   isbn13: string
   description: string
@@ -48,6 +50,7 @@ export default function BookCard({
             key={id}
             id={id}
             title={title}
+            industryIdentifier={industryIdentifier}
             isbn10={isbn10}
             isbn13={isbn13}
             description={description}

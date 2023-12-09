@@ -65,25 +65,31 @@ export const getBook = async (id: string) => {
  */
 export const addBook = async (
   id: string,
-  isbn: string,
+  industryIdentifier: string | null,
+  isbn10: string | null,
+  isbn13: string | null,
   name: string,
   thumbnail: string,
   publisher: string,
   publishedDate: string,
   pageCount: number,
-  description: string
+  description: string,
+  author: string | null
   ): Promise<void> => {
-  const { data: likeData, error } = await supabase
+  const { error } = await supabase
     .from('book')
     .upsert([
       { id: id,
-        isbn: isbn,
+        industryIdentifier: industryIdentifier,
+        isbn10: isbn10,
+        isbn13: isbn13,
         name: name,
         thumbnail: thumbnail,
         publisher:publisher,
         published_date: publishedDate,
         page: pageCount,
-        description: description
+        description: description,
+        author: author
        }
     ])
     .select('*')
