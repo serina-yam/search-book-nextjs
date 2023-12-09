@@ -96,9 +96,9 @@ export default function BookPage({ params }: { params: { id: string } }) {
     submitStockProcessing.current = true
 
     setLoadingStock(true)
-    const isbn = book?.isbn13 ? book?.isbn13 : (book?.isbn10 ? book?.isbn10 : book?.industryIdentifier);
-    if (isbn == null) return
-    addStock(userId, id, isbn)
+    const industryIdentifier = book?.isbn13 ? book?.isbn13 : (book?.isbn10 ? book?.isbn10 : book?.industryIdentifier);
+    if (industryIdentifier == null) return
+    addStock(userId, id, industryIdentifier)
       .then(() => {
         setStock(true)
         setLoadingStock(false)

@@ -79,19 +79,19 @@ export interface Database {
         Row: {
           book_id: string
           created_at: string
-          isbn: string
+          industryIdentifier: string
           user_id: number
         }
         Insert: {
           book_id: string
           created_at?: string
-          isbn: string
+          industryIdentifier: string
           user_id: number
         }
         Update: {
           book_id?: string
           created_at?: string
-          isbn?: string
+          industryIdentifier?: string
           user_id?: number
         }
         Relationships: []
