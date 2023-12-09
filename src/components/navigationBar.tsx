@@ -17,8 +17,8 @@ export default function NavigationBar() {
           <Link href={'/'}>
             <div className="flex">
               <LibraryBig />
+              <h1 className='px-1 font-bold'>Search Book</h1>
               <MoonStar />
-              <LibraryBig />
             </div>
           </Link>
         </NavbarBrand>
