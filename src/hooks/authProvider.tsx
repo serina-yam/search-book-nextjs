@@ -14,15 +14,24 @@ type AuthContextType = {
   };
   signInWithGithub: () => Promise<void>;
   signOut: () => Promise<void>;
+  searchWord: string;
+  setSearchWord: (word: string) => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [error, setError] = useState<string>('');
+  const [searchWord, setSearchWord] = useState<string>('');
 
   useEffect(() => {
     const fetchData = () => {
@@ -67,12 +76,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await supabase.auth.signOut();
   };
 
+
   const contextValue: AuthContextType = {
     session,
     error,
     profileFromGithub,
     signInWithGithub,
     signOut,
+    searchWord,
+    setSearchWord
   };
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
