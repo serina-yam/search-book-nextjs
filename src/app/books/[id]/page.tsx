@@ -1,18 +1,28 @@
 'use client'
 
 import { Image } from '@nextui-org/react'
+import { BookmarkPlus, BookmarkCheck } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import Layout from '@/app/layout'
+import { Loader } from '@/components/loader'
 import NavigationBar from '@/components/navigationBar'
+import { useAuth } from '@/hooks/authProvider'
 import { searchBookById } from '@/lib/fetchGoogle'
 import { Tables } from '@/lib/supabase'
-import { addBook, getBook } from '@/lib/supabaseFunctions'
+import { addBook, addStock, deleteStock, getBook, getStock } from '@/lib/supabaseFunctions'
 import utilStyles from '@/styles/utils.module.css'
 
 export default function BookPage({ params }: { params: { id: string } }) {
   const [book, setBook] = useState<Tables<'book'>>()
   const id = params.id;
   const submitProcessing = useRef(false)
+
+  const [stock, setStock] = useState(false)
+  const submitStockProcessing = useRef(false)
+  const [loadingStock, setLoadingStock] = useState(false)
+
+  const profileFromGithub = useAuth()?.profileFromGithub
+  const userId: number = profileFromGithub?.id ?? 0;
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -52,8 +62,71 @@ export default function BookPage({ params }: { params: { id: string } }) {
       })
     }
 
+    const fetchStock = async () => {
+      getStock(userId, id).then((stockData) => {
+        if (stockData == null || stockData?.length == 0) {
+          setStock(false)
+        } else {
+          setStock(true)
+        }
+      })
+    }
+
     fetchBook()
-  }, [id])
+    fetchStock()
+  }, [id, userId])
+
+  const onAddStock = () => {
+    if (userId === 0) {
+      alert('ログインしてください')
+      return
+    }
+
+    // 連続送信中止
+    if (submitStockProcessing.current) return
+    submitStockProcessing.current = true
+
+    setLoadingStock(true)
+    const isbn = book?.isbn;
+    if (isbn == null) return
+    addStock(userId, id, isbn)
+      .then(() => {
+        setStock(true)
+        setLoadingStock(false)
+        submitStockProcessing.current = false
+      })
+      .catch((error) => {
+        console.error(error)
+        setStock(false)
+        setLoadingStock(false)
+        submitStockProcessing.current = false
+      })
+  }
+
+  const onDeleteStock = () => {
+    if (userId === 0) {
+      alert('ログインしてください')
+      return
+    }
+
+    // 連続送信中止
+    if (submitStockProcessing.current) return
+    submitStockProcessing.current = true
+
+    setLoadingStock(true)
+    deleteStock(userId, id)
+      .then(() => {
+        setStock(false)
+        setLoadingStock(false)
+        submitStockProcessing.current = false
+      })
+      .catch((error) => {
+        console.error(error)
+        setStock(false)
+        setLoadingStock(false)
+        submitStockProcessing.current = false
+      })
+  }
 
   return (
     <Layout>
@@ -70,6 +143,21 @@ export default function BookPage({ params }: { params: { id: string } }) {
               />
             </div>
             <div>
+              {loadingStock ? (
+                <button>
+                  <Loader />
+                </button>
+              ) : stock ? (
+                <button onClick={onDeleteStock} className="flex">
+                  <BookmarkCheck color="#eb4667" />
+                  <div>削除する</div>
+                </button>
+              ) : (
+                <button onClick={onAddStock} className="flex">
+                  <BookmarkPlus color="#bdbdbd" />
+                  <div>ストックする</div>
+                </button>
+              )}
               <h2>{book?.name}</h2>
               <dl className="flex">
                 <dt className="w-32">ISBN</dt>
