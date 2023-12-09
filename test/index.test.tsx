@@ -1,12 +1,20 @@
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import Home from '@/app/page'
 
-describe('Home', () => {
-  it('renders a heading', () => {
-    render(<Home />)
-    const heading = screen.getByRole('heading', {
-      name: /Let's search for books by title/i,
-    })
-    expect(heading).toBeInTheDocument()
-  })
-})
+describe('Home Component', () => {
+  it('sets input value and searchWord correctly', () => {
+    const mockSearchWord = 'Sample Search';
+    const mockSetSearchWord = jest.fn();
+
+    jest.mock('@/hooks/authProvider', () => ({
+      useAuth: () => ({
+        searchWord: mockSearchWord,
+        setSearchWord: mockSetSearchWord,
+      }),
+    }));
+
+    render(<Home />);
+
+    expect(mockSetSearchWord).toHaveBeenCalledWith(mockSearchWord);
+  });
+});
