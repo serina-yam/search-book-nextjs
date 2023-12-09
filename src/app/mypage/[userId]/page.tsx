@@ -56,14 +56,17 @@ export default function Mypage({ params }: { params: { userId: string }}) {
           <LogoutButton />
         </div>
         <div className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-          <div className="grid grid-cols-2 items-start gap-2 sm:grid-cols-2">
+          <div className="grid grid-cols-1 items-start gap-2 sm:grid-cols-3">
             {books &&
               books.map((book: Tables<'book'>) => (
                 <Stock 
                   key={book.id}
                   id={book.id}
-                  isbn={book.isbn}
+                  industryIdentifier={book.industryIdentifier}
+                  isbn13={book.isbn13}
+                  isbn10={book.isbn10}
                   title={book.name}
+                  author={book.author}
                   thumbnail={book.thumbnail}
                   publisher={book.publisher}
                   publishedDate={book.published_date}

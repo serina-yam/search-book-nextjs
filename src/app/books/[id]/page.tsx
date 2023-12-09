@@ -33,22 +33,31 @@ export default function BookPage({ params }: { params: { id: string } }) {
           searchBookById(id)
             .then((result) => {
               if (result) {
-                const isbn = result.volumeInfo.industryIdentifiers[0]?.identifier ? result.volumeInfo.industryIdentifiers[0]?.identifier : result.volumeInfo.industryIdentifiers[1]?.identifier
                 
                 // 1回だけ登録するようにする
                 if (submitProcessing.current) return
                 submitProcessing.current = true
-                addBook(result.id, isbn, result.volumeInfo.title, result.volumeInfo.imageLinks?.thumbnail, result.volumeInfo.publisher, result.volumeInfo.publishedDate, result.volumeInfo.pageCount, result.volumeInfo.description)
+
+                const industryIdentifier = result.volumeInfo.industryIdentifiers && result.volumeInfo.industryIdentifiers.length > 0 && result.volumeInfo.industryIdentifiers[0].identifier.includes("PKEY")
+                  ? result.volumeInfo.industryIdentifiers[0].identifier.replace('PKEY:', '') : null;
+                const isbn13 = result.volumeInfo.industryIdentifiers && result.volumeInfo.industryIdentifiers.length > 0 && !result.volumeInfo.industryIdentifiers[0].identifier.includes("PKEY")
+                  ? result.volumeInfo.industryIdentifiers[1].identifier : null;
+                const isbn10 = result.volumeInfo.industryIdentifiers && result.volumeInfo.industryIdentifiers.length > 0
+                  ? result.volumeInfo.industryIdentifiers[0].identifier : null;
+                addBook(result.id, industryIdentifier, isbn13, isbn10, result.volumeInfo.title, result.volumeInfo.imageLinks?.thumbnail, result.volumeInfo.publisher, result.volumeInfo.publishedDate, result.volumeInfo.pageCount, result.volumeInfo.description, result.volumeInfo.author)
                 
                 const newBook = {
                   id: id,
                   description: result.volumeInfo.description,
-                  isbn: isbn,
+                  industryIdentifier: industryIdentifier,
+                  isbn13: isbn13,
+                  isbn10: isbn10,
                   name: result.volumeInfo.title,
                   page: result.volumeInfo.pageCount,
                   published_date: result.volumeInfo.publishedDate,
                   publisher: result.volumeInfo.publisher,
                   thumbnail: result.volumeInfo.imageLinks?.thumbnail,
+                  author: result.volumeInfo.author,
                   created_at: '',
               };
                 
@@ -87,7 +96,7 @@ export default function BookPage({ params }: { params: { id: string } }) {
     submitStockProcessing.current = true
 
     setLoadingStock(true)
-    const isbn = book?.isbn;
+    const isbn = book?.isbn13 ? book?.isbn13 : (book?.isbn10 ? book?.isbn10 : book?.industryIdentifier);
     if (isbn == null) return
     addStock(userId, id, isbn)
       .then(() => {
@@ -160,9 +169,26 @@ export default function BookPage({ params }: { params: { id: string } }) {
               )}
               <h2>{book?.name}</h2>
               <dl className="flex">
-                <dt className="w-32">ISBN</dt>
-                <dd>{book?.isbn}</dd>
+                <dt className="w-32">著者</dt>
+                <dd>{book?.author}</dd>
               </dl>
+              {book?.industryIdentifier != null ? 
+                  <dl className="flex">
+                    <dt className="w-36">PKEY:</dt>
+                    <dd className="w-3/4">{book?.industryIdentifier}</dd>
+                  </dl>
+                :
+                  <>
+                    <dl className="flex">
+                      <dt className="w-36">ISBN10:</dt>
+                      <dd className="w-3/4">{book?.isbn10}</dd>
+                    </dl>
+                    <dl className="flex">
+                      <dt className="w-36">ISBN13:</dt>
+                      <dd className="w-3/4">{book?.isbn13}</dd>
+                    </dl>
+                  </>
+              }
               <dl className="flex">
                 <dt className="w-32">出版社</dt>
                 <dd>{book?.publisher}</dd>
