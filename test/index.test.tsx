@@ -1,6 +1,13 @@
 import { render } from '@testing-library/react'
 import Home from '@/app/page'
 
+jest.mock('@/hooks/authProvider', () => ({
+  useAuth: () => ({
+    searchWord: '',
+    setSearchWord: jest.fn(),
+  }),
+}));
+
 describe('Home Component', () => {
   it('sets input value and searchWord correctly', () => {
     const mockSearchWord = 'Sample Search';
