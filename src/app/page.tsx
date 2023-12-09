@@ -1,10 +1,11 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Layout from '@/app/layout'
 import BookCard from '@/components/bookCard'
 import NavigationBar from '@/components/navigationBar'
 import SearchBar from '@/components/searchBar'
+import { useAuth } from '@/hooks/authProvider'
 import { searchBooksByTitle } from '@/lib/fetchGoogle'
 import utilStyles from '@/styles/utils.module.css'
 import BookInfo from '@/types/bookInfo'
@@ -14,15 +15,27 @@ export default function Home() {
   const submitProcessing = useRef(false)
   const [books, setBooks] = useState<BookInfo[]>([])
   const [loading, setLoading] = useState(false)
+  const { searchWord, setSearchWord } = useAuth();
+
+  useEffect(() => {
+    // 検索条件あればセット
+    if (searchWord != '') {
+      setInput(searchWord)
+      setSearchWord(searchWord)
+    }
+
+  }, [searchWord, setSearchWord])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value)
   }
-
+  
   const handleButtonClick = () => {
     // 連続送信中止
     if (submitProcessing.current) return
     submitProcessing.current = true
+
+    setSearchWord(input); // 検索条件をセット
 
     setLoading(true)
     searchBooksByTitle(input)
@@ -60,10 +73,11 @@ export default function Home() {
         {/* <div className={`${utilStyles.headingMd} ${isVisible ? utilStyles.stickyBg : ''} sticky top-0`}> */}
         <div className={`${utilStyles.headingMd}`}>
           <div className={utilStyles.container}>
-            <h2 className="text-center">
-              Let&apos;s search for books
-              <br />
-              by title
+            <h2 className="pb-2 text-center">
+              <div className="flex flex-col justify-center sm:flex-row">
+                <div className="whitespace-pre-wrap">Let&apos;s search for books </div>
+                <div>by title</div>
+              </div>
             </h2>
             <SearchBar
               input={input}
