@@ -29,8 +29,8 @@ export const getStock = async (user_id: number, id: string) => {
  * @param isbn
  * @returns
  */
-export const addStock = async (user_id: number, id: string, isbn: string) => {
-  const { error } = await supabase.from('stock').insert([{ user_id: user_id, book_id: id, isbn: isbn }])
+export const addStock = async (user_id: number, id: string, industryIdentifier: string) => {
+  const { error } = await supabase.from('stock').insert([{ user_id: user_id, book_id: id, industryIdentifier: industryIdentifier }])
   return error
 }
 

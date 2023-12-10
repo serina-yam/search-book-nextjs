@@ -39,7 +39,7 @@ export default function BookCardProp({
 
   const profileFromGithub = useAuth()?.profileFromGithub
   const userId: number = profileFromGithub?.id ?? 0;
-  const isbn = isbn13 ? isbn13 : (isbn10 ? isbn10 : industryIdentifier)
+  const industryIdentifierInfo = isbn13 ? isbn13 : (isbn10 ? isbn10 : industryIdentifier)
 
   useEffect(() => {
     // データを取得する処理を行う関数
@@ -70,7 +70,7 @@ export default function BookCardProp({
     submitStockProcessing.current = true
 
     setLoadingStock(true)
-    addStock(userId, id, isbn)
+    addStock(userId, id, industryIdentifierInfo)
       .then(() => {
         setStock(true)
 

@@ -25,3 +25,9 @@ export const searchBooksByTitle = async (title: string) => {
       console.error(error)
     }
   }
+
+
+
+export const removeHTMLTags = (text: string) => {
+  return text.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '');
+}

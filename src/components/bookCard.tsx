@@ -1,6 +1,7 @@
 import { Card, CardBody, Image, CardFooter } from '@nextui-org/react'
 import { Popover, PopoverTrigger, PopoverContent } from '@nextui-org/react'
 import BookCardProp from '@/components/bookCardProp'
+import { removeHTMLTags } from '@/lib/fetchGoogle'
 
 export default function BookCard({
   id,
@@ -28,6 +29,7 @@ export default function BookCard({
   publisher: string
 }) {
   if (description) {
+    description = removeHTMLTags(description)
     if (description.length >= 200) {
       description = description.slice(0, 100) + '...'
     }
