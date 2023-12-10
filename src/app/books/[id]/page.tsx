@@ -7,7 +7,7 @@ import Layout from '@/app/layout'
 import { Loader } from '@/components/loader'
 import NavigationBar from '@/components/navigationBar'
 import { useAuth } from '@/hooks/authProvider'
-import { searchBookById } from '@/lib/fetchGoogle'
+import { removeHTMLTags, searchBookById } from '@/lib/fetchGoogle'
 import { Tables } from '@/lib/supabase'
 import { addBook, addStock, deleteStock, getBook, getStock } from '@/lib/supabaseFunctions'
 import utilStyles from '@/styles/utils.module.css'
@@ -44,11 +44,11 @@ export default function BookPage({ params }: { params: { id: string } }) {
                   ? result.volumeInfo.industryIdentifiers[1].identifier : null;
                 const isbn10 = result.volumeInfo.industryIdentifiers && result.volumeInfo.industryIdentifiers.length > 0
                   ? result.volumeInfo.industryIdentifiers[0].identifier : null;
-                addBook(result.id, industryIdentifier, isbn13, isbn10, result.volumeInfo.title, result.volumeInfo.imageLinks?.thumbnail, result.volumeInfo.publisher, result.volumeInfo.publishedDate, result.volumeInfo.pageCount, result.volumeInfo.description, result.volumeInfo.author)
+                addBook(result.id, industryIdentifier, isbn13, isbn10, result.volumeInfo.title, result.volumeInfo.imageLinks?.thumbnail, result.volumeInfo.publisher, result.volumeInfo.publishedDate, result.volumeInfo.pageCount, removeHTMLTags(result.volumeInfo.description), result.volumeInfo.author)
                 
                 const newBook = {
                   id: id,
-                  description: result.volumeInfo.description,
+                  description: removeHTMLTags(result.volumeInfo.description),
                   industryIdentifier: industryIdentifier,
                   isbn13: isbn13,
                   isbn10: isbn10,
@@ -204,7 +204,9 @@ export default function BookPage({ params }: { params: { id: string } }) {
             </div>
           </div>
           <div className="mt-12">
-            {book?.description}
+            <pre className="whitespace-pre-wrap">
+              {book?.description}
+            </pre>
           </div>
         </div>
       </div>
