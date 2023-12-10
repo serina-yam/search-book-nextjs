@@ -80,3 +80,10 @@ https://main.d1h9h0rr432r2c.amplifyapp.com/
 
 ## 画面遷移図
 [Figma 画面遷移図](https://www.figma.com/file/TgaTiiwpM5eXJYn1lMzXv8/%E5%9B%B3%E6%9B%B8%E9%A4%A8%E6%9C%AC%E6%A4%9C%E7%B4%A2%E3%82%B5%E3%82%A4%E3%83%88?type=design&node-id=37%3A186&mode=design&t=vQTx6gS1RFQaDDOB-1)
+
+## 今後追加予定の機能
+現在、GitHubでのログインでしかログインできないため、メールアドレスとパスワードでログイン可能にする機能を追加する予定です。
+
+- ログイン画面の作成
+- サインアップ機能の実装
+- ログイン方法にGoogle認証を追加
