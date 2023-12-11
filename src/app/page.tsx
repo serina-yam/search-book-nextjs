@@ -29,7 +29,6 @@ export default function Home() {
       setBooks(result)
     }
 
-    // throw new Error('テストエラー');
   }, [result, searchWord, setResult, setSearchWord])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

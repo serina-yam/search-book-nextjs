@@ -8,7 +8,6 @@ import NavigationBar from '@/components/navigationBar'
 import utilStyles from '@/styles/utils.module.css'
 
 
-// TODO エラー画面デザインする
 export default function NotFound() {
   return (
     <Layout>
@@ -16,20 +15,18 @@ export default function NotFound() {
       <main>
         <div className={utilStyles.headingMd}>
           <div className={`${utilStyles.container} flex flex-col items-center`} >
-            <div className="flex flex-col items-center sm:flex-row sm:items-start">
-              <div className="flex flex-auto shrink-0 flex-col flex-nowrap pr-0 pt-0 sm:pr-12 sm:pt-4">
-                <h2 className="text-6xl">Not Found</h2>
+            <div className="flex flex-col text-center">
+              <div className="flex flex-auto shrink-0 flex-col flex-nowrap items-center">
                 <div>
-                  <p>お探しのページが見つかりません。</p>
-                  <p>Could not find requested resource</p>
+                  <h2 className="text-6xl">Not Found</h2>
+                  <p>お探しのページはURLが間違っているか、<br />削除された可能性があります。</p>
                 </div>
+                <Image src={NotFoundImagePath} alt="Not Found Image" width={270} className='mt-6'/>
               </div>
-              <Image src={NotFoundImagePath} alt="Not Found Image" width={270} className='mt-6'/>
             </div>
             <Link href="/" className='mt-6'>ホームに戻る</Link>
           </div>
         </div>
-        
       </main>
     </Layout>
   )
