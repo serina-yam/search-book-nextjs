@@ -40,7 +40,7 @@ const SearchBar: React.FC<Props> = ({ input, loading, handleInputChange, handleB
           name="prompt"
           value={input}
           onChange={handleInputChange}
-          placeholder="fantastic beasts"
+          placeholder="気になる本を検索"
           className="h-10 w-full resize-none bg-transparent px-2 py-2.5 font-mono text-sm text-white outline-none ring-0 transition-all duration-300 placeholder:text-gray-400"
           ref={inputRef}
         />
