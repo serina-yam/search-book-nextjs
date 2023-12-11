@@ -1,5 +1,6 @@
 import { Card, CardBody, Image, CardFooter } from '@nextui-org/react'
 import { Popover, PopoverTrigger, PopoverContent } from '@nextui-org/react'
+import Link from 'next/link'
 import BookCardProp from '@/components/bookCardProp'
 import { removeHTMLTags } from '@/lib/fetchGoogle'
 
@@ -36,16 +37,28 @@ export default function BookCard({
   }
   return (
     <>
-      <Popover placement="bottom" backdrop="opaque" className="max-w-lg">
+      {/* スマホ */}
+      <Link href={`/books/${id}`} className="block max-w-lg sm:hidden">
+        <Card className="h-full cursor-pointer rounded-xl bg-slate-50 py-4">
+          <CardBody className="items-center overflow-visible py-2">
+            <Image alt={title} className="rounded-xl object-cover shadow-lg" src={thumbnail} width={128} />
+          </CardBody>
+          <CardFooter className="flex-col items-start px-4 pb-0 pt-2">
+            <div className="font-bold uppercase">{title}</div>
+          </CardFooter>
+        </Card>
+      </Link>
+      {/* PC */}
+      <Popover placement="bottom" backdrop="opaque" className="hidden max-w-lg sm:block">
         <PopoverTrigger>
           <Card className="h-full cursor-pointer rounded-xl bg-slate-50 py-4">
-            <CardBody className="items-center overflow-visible py-2">
-              <Image alt={title} className="rounded-xl object-cover shadow-lg" src={thumbnail} width={128} />
-            </CardBody>
-            <CardFooter className="flex-col items-start px-4 pb-0 pt-2">
-              <div className="font-bold uppercase">{title}</div>
-            </CardFooter>
-          </Card>
+              <CardBody className="items-center overflow-visible py-2">
+                <Image alt={title} className="rounded-xl object-cover shadow-lg" src={thumbnail} width={128} />
+              </CardBody>
+              <CardFooter className="flex-col items-start px-4 pb-0 pt-2">
+                <div className="font-bold uppercase">{title}</div>
+              </CardFooter>
+            </Card>
         </PopoverTrigger>
         <PopoverContent>
           <BookCardProp
