@@ -17,7 +17,6 @@ const AlertModal: React.FC<ModalComponentProps> = ({ isOpen, onClose, onDelete }
           </ModalBody>
           <ModalFooter>
             <Button
-              color="danger"
               variant="light"
               onPress={onClose}
               className="rounded bg-gray-300 px-4 py-2 hover:bg-gray-400"
@@ -25,9 +24,8 @@ const AlertModal: React.FC<ModalComponentProps> = ({ isOpen, onClose, onDelete }
               キャンセル
             </Button>
             <Button
-              color="primary"
               onClick={onDelete}
-              className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+              className="rounded bg-customPink px-4 py-2 text-white hover:bg-customPink"
             >
               削除
             </Button>
