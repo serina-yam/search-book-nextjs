@@ -66,12 +66,6 @@ https://main.d1h9h0rr432r2c.amplifyapp.com/
 
 - Next.jsのImage / Linkコンポーネントなどの活用によるサービス全体の高速化
 - GitHub ActionsによるCI / CDパイプラインの構築
-  - バックエンド
-    - CI: XXX / XXX
-    - CD: XXX
-  - フロントエンド
-    - CI: ESLint / Prettier / Jest
-    - CD: XXX
 
 ## インフラ構成図
 
