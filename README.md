@@ -20,18 +20,15 @@ https://main.d1h9h0rr432r2c.amplifyapp.com/
 
 ## 使用技術一覧
 
-**バックエンド:** supabase
-
-- コード解析 / フォーマッター: prettier
-- テストフレームワーク: jest
-
-**フロントエンド:** TypeScript 4.9.5 / React 18.0 / Next.js 14.0.2
+**フロントエンド・バックエンド:** TypeScript 4.9.5 / React 18.0 / Next.js 14.0.2
 
 - コード解析: ESLint
 - フォーマッター: Prettier
 - テストフレームワーク: Jest / React Testing Library
 - CSSフレームワーク: Tailwind CSS
 - 主要パッケージ: Axios / lucide / nextui / supabase/auth-helpers-nextjs / supabase/supabase-js
+
+**DB:** Supabase
 
 **インフラ:** AWS Amplify
 
