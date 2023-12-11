@@ -1,7 +1,7 @@
 <!-- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). -->
 
 
-# Search Book / 本ストックサービス
+# Search Book / 書籍ストックサービス
 
 
 ![service-image](https://github.com/serina-yam/search-book-nextjs/assets/64587946/27466d40-417d-4493-a24a-45aa06dc6cd6)
@@ -27,6 +27,7 @@ https://main.d1h9h0rr432r2c.amplifyapp.com/
 - テストフレームワーク: Jest / React Testing Library
 - CSSフレームワーク: Tailwind CSS
 - 主要パッケージ: Axios / lucide / nextui / supabase/auth-helpers-nextjs / supabase/supabase-js
+- API: Google Books APIs
 
 **DB:** Supabase
 
