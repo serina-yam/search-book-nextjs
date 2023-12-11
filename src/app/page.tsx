@@ -16,6 +16,7 @@ export default function Home() {
   const [books, setBooks] = useState<BookInfo[]>([])
   const [loading, setLoading] = useState(false)
   const { searchWord, setSearchWord } = useAuth();
+  const { result, setResult } = useAuth();
 
   useEffect(() => {
     // 検索条件あればセット
@@ -24,8 +25,12 @@ export default function Home() {
       setSearchWord(searchWord)
     }
 
+    if (result.length != 0) {
+      setBooks(result)
+    }
+
     // throw new Error('テストエラー');
-  }, [searchWord, setSearchWord])
+  }, [result, searchWord, setResult, setSearchWord])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value)
@@ -44,6 +49,7 @@ export default function Home() {
         if (books) {
           setLoading(false)
           setBooks(books)
+          setResult(books)
           submitProcessing.current = false
         }
       })
