@@ -2,6 +2,7 @@
 import { Session } from '@supabase/supabase-js';
 import React, { createContext, useContext, useEffect, useState, startTransition, ReactNode } from 'react';
 import supabase from '@/lib/supabase';
+import BookInfo from '@/types/bookInfo';
 
 type AuthContextType = {
   session: Session | null;
@@ -16,6 +17,8 @@ type AuthContextType = {
   signOut: () => Promise<void>;
   searchWord: string;
   setSearchWord: (word: string) => void;
+  result: BookInfo[];
+  setResult: (result: BookInfo[]) => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -32,6 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [error, setError] = useState<string>('');
   const [searchWord, setSearchWord] = useState<string>('');
+  const [result, setResult] = useState<BookInfo[]>([]);
 
   useEffect(() => {
     const fetchData = () => {
@@ -84,7 +88,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     signInWithGithub,
     signOut,
     searchWord,
-    setSearchWord
+    setSearchWord,
+    result,
+    setResult
   };
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;

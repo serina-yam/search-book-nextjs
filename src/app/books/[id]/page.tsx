@@ -48,7 +48,7 @@ export default function BookPage({ params }: { params: { id: string } }) {
                 
                 const newBook = {
                   id: id,
-                  description: removeHTMLTags(result.volumeInfo.description),
+                  description: result.volumeInfo.description != 'undefined' ? removeHTMLTags(result.volumeInfo.description) : '',
                   industryIdentifier: industryIdentifier,
                   isbn13: isbn13,
                   isbn10: isbn10,
