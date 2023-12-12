@@ -169,7 +169,7 @@ export default function BookPage({ params }: { params: { id: string } }) {
               )}
               <h2>{book?.name}</h2>
               <dl className="flex">
-                <dt className="w-auto sm:w-32">著者</dt>
+                <dt className="w-auto sm:w-32">著者:</dt>
                 <dd>{book?.author}</dd>
               </dl>
               {book?.industryIdentifier != null ? 
@@ -190,15 +190,15 @@ export default function BookPage({ params }: { params: { id: string } }) {
                   </>
               }
               <dl className="flex">
-                <dt className="w-auto sm:w-32">出版社</dt>
+                <dt className="w-auto sm:w-32">出版社:</dt>
                 <dd>{book?.publisher}</dd>
               </dl>
               <dl className="flex">
-                <dt className="w-auto sm:w-32">発売日</dt>
+                <dt className="w-auto sm:w-32">発売日:</dt>
                 <dd>{book?.published_date}</dd>
               </dl>
               <dl className="flex">
-                <dt className="w-auto sm:w-32">ページ数</dt>
+                <dt className="w-auto sm:w-32">ページ数:</dt>
                 <dd>{book?.page == null || book?.page === 0 ? '' : book?.page}</dd>
               </dl>
             </div>
