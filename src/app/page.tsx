@@ -81,8 +81,7 @@ export default function Home() {
           <div className={utilStyles.container}>
             <h2 className="pb-2 text-center">
               <div className="flex flex-col justify-center sm:flex-row">
-                <div className="whitespace-pre-wrap">Let&apos;s search for books </div>
-                <div>by title</div>
+                <div>Let&apos;s search for books</div>
               </div>
             </h2>
             <SearchBar
