@@ -16,17 +16,10 @@ const AlertModal: React.FC<ModalComponentProps> = ({ isOpen, onClose, onDelete }
             <p>削除しますがよろしいですか？</p>
           </ModalBody>
           <ModalFooter>
-            <Button
-              variant="light"
-              onPress={onClose}
-              className="rounded bg-gray-300 px-4 py-2 hover:bg-gray-400"
-            >
+            <Button variant="light" onPress={onClose} className="rounded bg-gray-300 px-4 py-2 hover:bg-gray-400">
               キャンセル
             </Button>
-            <Button
-              onClick={onDelete}
-              className="rounded bg-customPink px-4 py-2 text-white hover:bg-customPink"
-            >
+            <Button onClick={onDelete} className="rounded bg-customPink px-4 py-2 text-white hover:bg-customPink">
               削除
             </Button>
           </ModalFooter>

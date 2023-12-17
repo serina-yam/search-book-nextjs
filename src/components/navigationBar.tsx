@@ -4,9 +4,8 @@ import Link from 'next/link'
 import LoginButton from '@/components/loginButton'
 import { useAuth } from '@/hooks/authProvider'
 
-
 export default function NavigationBar() {
-  const contextValue = useAuth();
+  const contextValue = useAuth()
   const profileFromGithub = contextValue?.profileFromGithub
   const isLogin = contextValue?.session ? true : false
 
@@ -17,7 +16,7 @@ export default function NavigationBar() {
           <Link href={'/'}>
             <div className="flex">
               <LibraryBig />
-              <h1 className='px-1 font-bold'>Search Book</h1>
+              <h1 className="px-1 font-bold">Search Book</h1>
               <MoonStar />
             </div>
           </Link>
