@@ -15,8 +15,8 @@ export default function Home() {
   const submitProcessing = useRef(false)
   const [books, setBooks] = useState<BookInfo[]>([])
   const [loading, setLoading] = useState(false)
-  const { searchWord, setSearchWord } = useAuth();
-  const { result, setResult } = useAuth();
+  const { searchWord, setSearchWord } = useAuth()
+  const { result, setResult } = useAuth()
 
   useEffect(() => {
     // 検索条件あればセット
@@ -28,19 +28,18 @@ export default function Home() {
     if (result.length != 0) {
       setBooks(result)
     }
-
   }, [result, searchWord, setResult, setSearchWord])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value)
   }
-  
+
   const handleButtonClick = () => {
     // 連続送信中止
     if (submitProcessing.current) return
     submitProcessing.current = true
 
-    setSearchWord(input); // 検索条件をセット
+    setSearchWord(input) // 検索条件をセット
 
     setLoading(true)
     searchBooksByTitle(input)
@@ -58,8 +57,6 @@ export default function Home() {
         submitProcessing.current = false
       })
   }
-
-
 
   // // ヘッダの背景色変更
   // const [isVisible, setIsVisible] = useState(false)
@@ -100,17 +97,24 @@ export default function Home() {
                 id={book.id}
                 title={book.volumeInfo.title}
                 industryIdentifier={
-                  book.volumeInfo.industryIdentifiers && book.volumeInfo.industryIdentifiers.length > 0 && book.volumeInfo.industryIdentifiers[0].identifier.includes("PKEY")
+                  book.volumeInfo.industryIdentifiers &&
+                  book.volumeInfo.industryIdentifiers.length > 0 &&
+                  book.volumeInfo.industryIdentifiers[0].identifier.includes('PKEY')
                     ? book.volumeInfo.industryIdentifiers[0].identifier.replace('PKEY:', '')
-                    : ''}
+                    : ''
+                }
                 isbn10={
-                  book.volumeInfo.industryIdentifiers && book.volumeInfo.industryIdentifiers.length > 0 && !book.volumeInfo.industryIdentifiers[0].identifier.includes("PKEY")
+                  book.volumeInfo.industryIdentifiers &&
+                  book.volumeInfo.industryIdentifiers.length > 0 &&
+                  !book.volumeInfo.industryIdentifiers[0].identifier.includes('PKEY')
                     ? book.volumeInfo.industryIdentifiers[0].identifier
-                    : ''}
+                    : ''
+                }
                 isbn13={
                   book.volumeInfo.industryIdentifiers && book.volumeInfo.industryIdentifiers.length > 1
                     ? book.volumeInfo.industryIdentifiers[1].identifier
-                    : ''}
+                    : ''
+                }
                 description={book.volumeInfo.description}
                 publishedDate={book.volumeInfo.publishedDate}
                 authors={book.volumeInfo.authors}
