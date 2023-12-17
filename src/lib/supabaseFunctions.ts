@@ -30,7 +30,9 @@ export const getStock = async (user_id: number, id: string) => {
  * @returns
  */
 export const addStock = async (user_id: number, id: string, industryIdentifier: string) => {
-  const { error } = await supabase.from('stock').insert([{ user_id: user_id, book_id: id, industryIdentifier: industryIdentifier }])
+  const { error } = await supabase
+    .from('stock')
+    .insert([{ user_id: user_id, book_id: id, industryIdentifier: industryIdentifier }])
   return error
 }
 
@@ -75,22 +77,23 @@ export const addBook = async (
   pageCount: number,
   description: string,
   author: string | null
-  ): Promise<void> => {
+): Promise<void> => {
   const { error } = await supabase
     .from('book')
     .upsert([
-      { id: id,
+      {
+        id: id,
         industryIdentifier: industryIdentifier,
         isbn10: isbn10,
         isbn13: isbn13,
         name: name,
         thumbnail: thumbnail,
-        publisher:publisher,
+        publisher: publisher,
         published_date: publishedDate,
         page: pageCount,
         description: description,
-        author: author
-       }
+        author: author,
+      },
     ])
     .select('*')
 

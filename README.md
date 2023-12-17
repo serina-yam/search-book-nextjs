@@ -1,8 +1,6 @@
 <!-- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). -->
 
-
 # Search Book / 書籍ストックサービス
-
 
 ![service-image](https://github.com/serina-yam/search-book-nextjs/assets/64587946/27466d40-417d-4493-a24a-45aa06dc6cd6)
 [![CI/CD](https://github.com/serina-yam/search-book-nextjs/actions/workflows/build-and-test-on-push.yml/badge.svg?branch=main)](https://github.com/serina-yam/search-book-nextjs/actions/workflows/build-and-test-on-push.yml)
@@ -12,11 +10,12 @@
 [![AWS](https://img.shields.io/badge/Amazon%20AWS-gray?logo=Amazon-AWS&logoColor=FFFFFF)](https://aws.amazon.com)
 
 ## サービス概要
+
 読みたい本や気になる本を検索して本棚にストックしておけるサービスです。
 
 ## サービスURL
-https://main.d1h9h0rr432r2c.amplifyapp.com/
 
+https://main.d1h9h0rr432r2c.amplifyapp.com/
 
 ## 使用技術一覧
 
@@ -37,16 +36,17 @@ https://main.d1h9h0rr432r2c.amplifyapp.com/
 
 **認証:** Supabase
 
-
 ## 主要対応一覧
+
 ### 機能
 
 <!--
-- メールアドレスとパスワードを利用したユーザー登録 / ログイン機能 
+- メールアドレスとパスワードを利用したユーザー登録 / ログイン機能
 - ユーザー情報変更機能
 - パスワード再設定機能
 - 退会機能
 -->
+
 - GitHubアカウントを利用したユーザー登録 / ログイン機能
 - ストックの取得 / 追加 / 削除機能
 - 本の検索機能
@@ -68,12 +68,15 @@ https://main.d1h9h0rr432r2c.amplifyapp.com/
 ## インフラ構成図
 
 ## ER図
+
 ![ER](https://github.com/serina-yam/search-book-nextjs/assets/64587946/e9fee8bc-e3ab-4fb8-8684-fcf8eb97df89)
 
 ## 画面遷移図
+
 [Figma 画面遷移図](https://www.figma.com/file/TgaTiiwpM5eXJYn1lMzXv8/%E5%9B%B3%E6%9B%B8%E9%A4%A8%E6%9C%AC%E6%A4%9C%E7%B4%A2%E3%82%B5%E3%82%A4%E3%83%88?type=design&node-id=37%3A186&mode=design&t=vQTx6gS1RFQaDDOB-1)
 
 ## 今後追加予定の機能
+
 現在、GitHubでしかログインできないため、メールアドレスとパスワードでログイン可能にする機能を追加する予定です。
 
 - ログイン画面の作成

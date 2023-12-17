@@ -14,7 +14,7 @@ import utilStyles from '@/styles/utils.module.css'
 
 export default function BookPage({ params }: { params: { id: string } }) {
   const [book, setBook] = useState<Tables<'book'>>()
-  const id = params.id;
+  const id = params.id
   const submitProcessing = useRef(false)
 
   const [stock, setStock] = useState(false)
@@ -22,7 +22,7 @@ export default function BookPage({ params }: { params: { id: string } }) {
   const [loadingStock, setLoadingStock] = useState(false)
 
   const profileFromGithub = useAuth()?.profileFromGithub
-  const userId: number = profileFromGithub?.id ?? 0;
+  const userId: number = profileFromGithub?.id ?? 0
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -33,22 +33,44 @@ export default function BookPage({ params }: { params: { id: string } }) {
           searchBookById(id)
             .then((result) => {
               if (result) {
-                
                 // 1回だけ登録するようにする
                 if (submitProcessing.current) return
                 submitProcessing.current = true
 
-                const industryIdentifier = result.volumeInfo.industryIdentifiers && result.volumeInfo.industryIdentifiers.length > 0 && result.volumeInfo.industryIdentifiers[0].identifier.includes("PKEY")
-                  ? result.volumeInfo.industryIdentifiers[0].identifier.replace('PKEY:', '') : null;
-                const isbn13 = result.volumeInfo.industryIdentifiers && result.volumeInfo.industryIdentifiers.length > 0 && !result.volumeInfo.industryIdentifiers[0].identifier.includes("PKEY")
-                  ? result.volumeInfo.industryIdentifiers[1].identifier : null;
-                const isbn10 = result.volumeInfo.industryIdentifiers && result.volumeInfo.industryIdentifiers.length > 0
-                  ? result.volumeInfo.industryIdentifiers[0].identifier : null;
-                addBook(result.id, industryIdentifier, isbn13, isbn10, result.volumeInfo.title, result.volumeInfo.imageLinks?.thumbnail, result.volumeInfo.publisher, result.volumeInfo.publishedDate, result.volumeInfo.pageCount, removeHTMLTags(result.volumeInfo.description), result.volumeInfo.author)
-                
+                const industryIdentifier =
+                  result.volumeInfo.industryIdentifiers &&
+                  result.volumeInfo.industryIdentifiers.length > 0 &&
+                  result.volumeInfo.industryIdentifiers[0].identifier.includes('PKEY')
+                    ? result.volumeInfo.industryIdentifiers[0].identifier.replace('PKEY:', '')
+                    : null
+                const isbn13 =
+                  result.volumeInfo.industryIdentifiers &&
+                  result.volumeInfo.industryIdentifiers.length > 0 &&
+                  !result.volumeInfo.industryIdentifiers[0].identifier.includes('PKEY')
+                    ? result.volumeInfo.industryIdentifiers[1].identifier
+                    : null
+                const isbn10 =
+                  result.volumeInfo.industryIdentifiers && result.volumeInfo.industryIdentifiers.length > 0
+                    ? result.volumeInfo.industryIdentifiers[0].identifier
+                    : null
+                addBook(
+                  result.id,
+                  industryIdentifier,
+                  isbn13,
+                  isbn10,
+                  result.volumeInfo.title,
+                  result.volumeInfo.imageLinks?.thumbnail,
+                  result.volumeInfo.publisher,
+                  result.volumeInfo.publishedDate,
+                  result.volumeInfo.pageCount,
+                  removeHTMLTags(result.volumeInfo.description),
+                  result.volumeInfo.author
+                )
+
                 const newBook = {
                   id: id,
-                  description: result.volumeInfo.description != 'undefined' ? removeHTMLTags(result.volumeInfo.description) : '',
+                  description:
+                    result.volumeInfo.description != 'undefined' ? removeHTMLTags(result.volumeInfo.description) : '',
                   industryIdentifier: industryIdentifier,
                   isbn13: isbn13,
                   isbn10: isbn10,
@@ -59,8 +81,8 @@ export default function BookPage({ params }: { params: { id: string } }) {
                   thumbnail: result.volumeInfo.imageLinks?.thumbnail,
                   author: result.volumeInfo.author,
                   created_at: '',
-              };
-                
+                }
+
                 setBook(newBook)
               }
             })
@@ -96,7 +118,7 @@ export default function BookPage({ params }: { params: { id: string } }) {
     submitStockProcessing.current = true
 
     setLoadingStock(true)
-    const industryIdentifier = book?.isbn13 ? book?.isbn13 : (book?.isbn10 ? book?.isbn10 : book?.industryIdentifier);
+    const industryIdentifier = book?.isbn13 ? book?.isbn13 : book?.isbn10 ? book?.isbn10 : book?.industryIdentifier
     if (industryIdentifier == null) return
     addStock(userId, id, industryIdentifier)
       .then(() => {
@@ -144,12 +166,7 @@ export default function BookPage({ params }: { params: { id: string } }) {
         <div className={`sm:${utilStyles.headingMd} ${utilStyles.padding1px}`}>
           <div className="flex flex-col items-center justify-center sm:flex-row">
             <div className="flex w-full justify-center sm:w-1/3">
-              <Image
-                alt={book?.name}
-                className="rounded-xl object-cover shadow-lg"
-                src={book?.thumbnail}
-                width={200}
-              />
+              <Image alt={book?.name} className="rounded-xl object-cover shadow-lg" src={book?.thumbnail} width={200} />
             </div>
             <div className="mt-6 sm:mt-0">
               {loadingStock ? (
@@ -172,23 +189,23 @@ export default function BookPage({ params }: { params: { id: string } }) {
                 <dt className="w-auto sm:w-32">著者:</dt>
                 <dd>{book?.author}</dd>
               </dl>
-              {book?.industryIdentifier != null ? 
+              {book?.industryIdentifier != null ? (
+                <dl className="flex">
+                  <dt className="w-auto sm:w-32">PKEY:</dt>
+                  <dd className="w-auto sm:w-3/4">{book?.industryIdentifier}</dd>
+                </dl>
+              ) : (
+                <>
                   <dl className="flex">
-                    <dt className="w-auto sm:w-32">PKEY:</dt>
-                    <dd className="w-auto sm:w-3/4">{book?.industryIdentifier}</dd>
+                    <dt className="w-auto sm:w-32">ISBN10:</dt>
+                    <dd className="w-auto sm:w-3/4">{book?.isbn10}</dd>
                   </dl>
-                :
-                  <>
-                    <dl className="flex">
-                      <dt className="w-auto sm:w-32">ISBN10:</dt>
-                      <dd className="w-auto sm:w-3/4">{book?.isbn10}</dd>
-                    </dl>
-                    <dl className="flex">
-                      <dt className="w-auto sm:w-32">ISBN13:</dt>
-                      <dd className="w-auto sm:w-3/4">{book?.isbn13}</dd>
-                    </dl>
-                  </>
-              }
+                  <dl className="flex">
+                    <dt className="w-auto sm:w-32">ISBN13:</dt>
+                    <dd className="w-auto sm:w-3/4">{book?.isbn13}</dd>
+                  </dl>
+                </>
+              )}
               <dl className="flex">
                 <dt className="w-auto sm:w-32">出版社:</dt>
                 <dd>{book?.publisher}</dd>
@@ -204,13 +221,10 @@ export default function BookPage({ params }: { params: { id: string } }) {
             </div>
           </div>
           <div className="mt-12">
-            <pre className="whitespace-pre-wrap">
-              {book?.description}
-            </pre>
+            <pre className="whitespace-pre-wrap">{book?.description}</pre>
           </div>
         </div>
       </div>
     </Layout>
   )
 }
-

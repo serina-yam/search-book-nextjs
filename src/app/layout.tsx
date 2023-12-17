@@ -21,11 +21,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="Let's search for books" />
       </head>
-      
+
       <body className={styles.container}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   )

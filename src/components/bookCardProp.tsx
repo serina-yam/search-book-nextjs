@@ -38,14 +38,14 @@ export default function BookCardProp({
   const [loadingStock, setLoadingStock] = useState(false)
 
   const profileFromGithub = useAuth()?.profileFromGithub
-  const userId: number = profileFromGithub?.id ?? 0;
-  const industryIdentifierInfo = isbn13 ? isbn13 : (isbn10 ? isbn10 : industryIdentifier)
+  const userId: number = profileFromGithub?.id ?? 0
+  const industryIdentifierInfo = isbn13 ? isbn13 : isbn10 ? isbn10 : industryIdentifier
 
   useEffect(() => {
     // データを取得する処理を行う関数
     const fetchStock = async () => {
       if (userId == null) return
-      
+
       getStock(userId, id).then((stockData) => {
         if (stockData == null || stockData?.length == 0) {
           setStock(false)
@@ -122,8 +122,20 @@ export default function BookCardProp({
 
       // データが存在しないときのみデータ登録
       const bookTitle = title
-      const author = authors ? authors.join(', ') : null;
-      addBook(id, industryIdentifier, isbn10, isbn13, bookTitle, thumbnail, publisher, publishedDate, pageCount, description, author).then(() => {
+      const author = authors ? authors.join(', ') : null
+      addBook(
+        id,
+        industryIdentifier,
+        isbn10,
+        isbn13,
+        bookTitle,
+        thumbnail,
+        publisher,
+        publishedDate,
+        pageCount,
+        description,
+        author
+      ).then(() => {
         console.log('added book')
       })
     })
@@ -147,23 +159,23 @@ export default function BookCardProp({
         <dt className="w-36">あらすじ:</dt>
         <dd className="w-3/4">{description}</dd>
       </dl>
-      {industryIdentifier != '' ? 
+      {industryIdentifier != '' ? (
+        <dl className="flex">
+          <dt className="w-36">PKEY:</dt>
+          <dd className="w-3/4">{industryIdentifier}</dd>
+        </dl>
+      ) : (
+        <>
           <dl className="flex">
-            <dt className="w-36">PKEY:</dt>
-            <dd className="w-3/4">{industryIdentifier}</dd>
+            <dt className="w-36">ISBN10:</dt>
+            <dd className="w-3/4">{isbn10}</dd>
           </dl>
-        :
-          <>
-            <dl className="flex">
-              <dt className="w-36">ISBN10:</dt>
-              <dd className="w-3/4">{isbn10}</dd>
-            </dl>
-            <dl className="flex">
-              <dt className="w-36">ISBN13:</dt>
-              <dd className="w-3/4">{isbn13}</dd>
-            </dl>
-          </>
-      }
+          <dl className="flex">
+            <dt className="w-36">ISBN13:</dt>
+            <dd className="w-3/4">{isbn13}</dd>
+          </dl>
+        </>
+      )}
       <dl className="flex">
         <dt className="w-36">発売日:</dt>
         <dd className="w-3/4">{publishedDate}</dd>
@@ -189,10 +201,10 @@ export default function BookCardProp({
             <div>ストックする</div>
           </button>
         )}
-      <Link href={`/books/${id}`} className="ml-6 flex">
-        <LinkImg />
-        詳細情報
-      </Link>
+        <Link href={`/books/${id}`} className="ml-6 flex">
+          <LinkImg />
+          詳細情報
+        </Link>
       </div>
     </div>
   )

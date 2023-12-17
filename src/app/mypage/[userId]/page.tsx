@@ -10,8 +10,7 @@ import { useAuth } from '@/hooks/authProvider'
 import supabase, { DbResultOk, Tables } from '@/lib/supabase'
 import utilStyles from '@/styles/utils.module.css'
 
-
-export default function Mypage({ params }: { params: { userId: string }}) {
+export default function Mypage({ params }: { params: { userId: string } }) {
   const profileFromGithub = useAuth()?.profileFromGithub
   const [books, setBooks] = useState<Tables<'book'>[]>()
   const userId = params.userId
@@ -59,7 +58,7 @@ export default function Mypage({ params }: { params: { userId: string }}) {
           <div className="grid grid-cols-1 items-start gap-2 sm:grid-cols-3">
             {books &&
               books.map((book: Tables<'book'>) => (
-                <Stock 
+                <Stock
                   key={book.id}
                   id={book.id}
                   industryIdentifier={book.industryIdentifier}
@@ -72,7 +71,7 @@ export default function Mypage({ params }: { params: { userId: string }}) {
                   publishedDate={book.published_date}
                   pageCount={book.page}
                   description={book.description}
-                   />
+                />
               ))}
           </div>
         </div>
