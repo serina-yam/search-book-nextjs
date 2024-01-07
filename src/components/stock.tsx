@@ -36,8 +36,8 @@ export default function Stock({
   const [stock, setStock] = useState(false)
   const submitStockProcessing = useRef(false)
 
-  const profileFromGithub = useAuth()?.profileFromGithub
-  const userId: number = profileFromGithub?.id ?? 0
+  const profileFromSession = useAuth()?.profileFromSession
+  const userId: number = profileFromSession?.id ?? 0
   const [idState, setIdState] = useState(id)
   const [modalOpen, setModalOpen] = useState(false)
 

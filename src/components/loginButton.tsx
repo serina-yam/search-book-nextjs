@@ -1,18 +1,19 @@
 'use client'
-import { Button } from '@nextui-org/react'
+
 import { LogIn } from 'lucide-react'
+import Link from 'next/link'
 import { useAuth } from '@/hooks/authProvider'
 
 const LoginButton = () => {
   const contextValue = useAuth()
-  const signInWithGithub = contextValue?.signInWithGithub
   const error = contextValue?.error
 
   return (
     <div>
-      <Button onClick={signInWithGithub} color="primary" variant="bordered" startContent={<LogIn />}>
-        Login with GitHub
-      </Button>
+      <Link href={`/login`} className="ml-6 flex">
+        <LogIn className="mr-2" />
+        Login
+      </Link>
       {error && <p>{error}</p>}
     </div>
   )

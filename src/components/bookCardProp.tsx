@@ -37,8 +37,8 @@ export default function BookCardProp({
   const submitStockProcessing = useRef(false)
   const [loadingStock, setLoadingStock] = useState(false)
 
-  const profileFromGithub = useAuth()?.profileFromGithub
-  const userId: number = profileFromGithub?.id ?? 0
+  const profileFromSession = useAuth()?.profileFromSession
+  const userId: number = profileFromSession?.id ?? 0
   const industryIdentifierInfo = isbn13 ? isbn13 : isbn10 ? isbn10 : industryIdentifier
 
   useEffect(() => {

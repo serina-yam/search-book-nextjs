@@ -11,7 +11,11 @@ import supabase, { DbResultOk, Tables } from '@/lib/supabase'
 import utilStyles from '@/styles/utils.module.css'
 
 export default function Mypage({ params }: { params: { userId: string } }) {
-  const profileFromGithub = useAuth()?.profileFromGithub
+
+  const profileFromSession = useAuth()?.profileFromSession
+  const fullName = profileFromSession?.fullName
+  const avatarUrl = profileFromSession?.avatarUrl
+
   const [books, setBooks] = useState<Tables<'book'>[]>()
   const userId = params.userId
 
@@ -46,11 +50,11 @@ export default function Mypage({ params }: { params: { userId: string } }) {
           <div className="flex items-center">
             <Avatar
               className="mr-2 transition-transform"
-              name={profileFromGithub?.fullName}
+              name={fullName}
               size="sm"
-              src={profileFromGithub?.avatarUrl}
+              src={avatarUrl}
             />
-            <h2>{profileFromGithub?.fullName}さんの本棚</h2>
+            <h2>{fullName}さんの本棚</h2>
           </div>
           <LogoutButton />
         </div>
