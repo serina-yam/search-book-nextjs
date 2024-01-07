@@ -38,7 +38,7 @@ export default function BookCardProp({
   const [loadingStock, setLoadingStock] = useState(false)
 
   const profileFromSession = useAuth()?.profileFromSession
-  const userId: number = profileFromSession?.id ?? 0
+  const userId: string = profileFromSession?.id ?? 0
   const industryIdentifierInfo = isbn13 ? isbn13 : isbn10 ? isbn10 : industryIdentifier
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function BookCardProp({
   }, [])
 
   const onAddStock = () => {
-    if (userId === 0) {
+    if (userId === '') {
       alert('ログインしてください')
       return
     }
@@ -89,7 +89,7 @@ export default function BookCardProp({
   }
 
   const onDeleteStock = () => {
-    if (userId === 0) {
+    if (userId === '') {
       alert('ログインしてください')
       return
     }
