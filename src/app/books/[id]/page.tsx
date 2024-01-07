@@ -2,6 +2,7 @@
 
 import { Image } from '@nextui-org/react'
 import { BookmarkPlus, BookmarkCheck } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import Layout from '@/app/layout'
 import { Loader } from '@/components/loader'
@@ -13,6 +14,8 @@ import { addBook, addStock, deleteStock, getBook, getStock } from '@/lib/supabas
 import utilStyles from '@/styles/utils.module.css'
 
 export default function BookPage({ params }: { params: { id: string } }) {
+  const router = useRouter()
+
   const [book, setBook] = useState<Tables<'book'>>()
   const id = params.id
   const submitProcessing = useRef(false)
@@ -109,7 +112,7 @@ export default function BookPage({ params }: { params: { id: string } }) {
 
   const onAddStock = () => {
     if (userId === '') {
-      alert('ログインしてください')
+      router.push('/login')
       return
     }
 

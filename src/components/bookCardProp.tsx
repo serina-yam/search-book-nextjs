@@ -3,6 +3,7 @@
 
 import { Link as LinkImg, BookmarkPlus, BookmarkCheck } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { Loader } from './loader'
 import { useAuth } from '@/hooks/authProvider'
@@ -33,6 +34,8 @@ export default function BookCardProp({
   thumbnail: string
   publisher: string
 }) {
+  const router = useRouter()
+
   const [stock, setStock] = useState(false)
   const submitStockProcessing = useRef(false)
   const [loadingStock, setLoadingStock] = useState(false)
@@ -61,7 +64,7 @@ export default function BookCardProp({
 
   const onAddStock = () => {
     if (userId === '') {
-      alert('ログインしてください')
+      router.push('/login')
       return
     }
 
