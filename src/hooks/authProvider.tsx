@@ -132,13 +132,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const profileFromSession = session
     ? {
-        id: session?.user?.user_metadata.provider_id || 0,
+        id: session?.user?.user_metadata.provider_id || '',
         fullName: session?.user?.user_metadata.full_name || '',
         userName: session?.user?.user_metadata.user_name || '',
         avatarUrl: session?.user?.user_metadata.avatar_url || '',
       }
     : {
-        id: 0,
+        id: '',
         fullName: '',
         userName: '',
         avatarUrl: '',
