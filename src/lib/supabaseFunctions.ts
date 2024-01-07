@@ -17,7 +17,7 @@ export const getStockByUserId = async (user_id: number) => {
  * @param isbn
  * @returns
  */
-export const getStock = async (user_id: number, id: string) => {
+export const getStock = async (user_id: string, id: string) => {
   const { data: stockData } = await supabase.from('stock').select('*').eq('user_id', user_id).eq('book_id', id)
 
   return stockData
@@ -29,7 +29,7 @@ export const getStock = async (user_id: number, id: string) => {
  * @param isbn
  * @returns
  */
-export const addStock = async (user_id: number, id: string, industryIdentifier: string) => {
+export const addStock = async (user_id: string, id: string, industryIdentifier: string) => {
   const { error } = await supabase
     .from('stock')
     .insert([{ user_id: user_id, book_id: id, industryIdentifier: industryIdentifier }])
@@ -42,7 +42,7 @@ export const addStock = async (user_id: number, id: string, industryIdentifier: 
  * @param id
  * @returns
  */
-export const deleteStock = async (user_id: number, id: string) => {
+export const deleteStock = async (user_id: string, id: string) => {
   const { error } = await supabase.from('stock').delete().eq('user_id', user_id).eq('book_id', id)
   return error
 }
@@ -53,7 +53,7 @@ export const deleteStock = async (user_id: number, id: string) => {
  * @returns
  */
 export const getBook = async (id: string) => {
-  const { data: bookData, error } = await supabase.from('book').select('*').eq('id', id).single()
+  const { data: bookData } = await supabase.from('book').select('*').eq('id', id).single()
 
   return bookData
 }

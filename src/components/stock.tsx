@@ -36,13 +36,13 @@ export default function Stock({
   const [stock, setStock] = useState(false)
   const submitStockProcessing = useRef(false)
 
-  const profileFromGithub = useAuth()?.profileFromGithub
-  const userId: number = profileFromGithub?.id ?? 0
+  const profileFromSession = useAuth()?.profileFromSession
+  const userId: string = profileFromSession?.id ?? ''
   const [idState, setIdState] = useState(id)
   const [modalOpen, setModalOpen] = useState(false)
 
   const onDeleteStock = () => {
-    if (userId === 0) return
+    if (userId === '') return
     // 連続送信中止
     if (submitStockProcessing.current) return
     submitStockProcessing.current = true
@@ -65,7 +65,7 @@ export default function Stock({
   }
 
   const handleDelete = () => {
-    if (userId === 0 || !userId || !idState) return setModalOpen(false) // 必要な情報がない場合は処理しない
+    if (userId === '' || !userId || !idState) return setModalOpen(false) // 必要な情報がない場合は処理しない
     onDeleteStock()
   }
 

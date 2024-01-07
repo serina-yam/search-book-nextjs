@@ -21,8 +21,8 @@ export default function BookPage({ params }: { params: { id: string } }) {
   const submitStockProcessing = useRef(false)
   const [loadingStock, setLoadingStock] = useState(false)
 
-  const profileFromGithub = useAuth()?.profileFromGithub
-  const userId: number = profileFromGithub?.id ?? 0
+  const profileFromSession = useAuth()?.profileFromSession
+  const userId: string = profileFromSession?.id ?? ''
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -108,7 +108,7 @@ export default function BookPage({ params }: { params: { id: string } }) {
   }, [id, userId])
 
   const onAddStock = () => {
-    if (userId === 0) {
+    if (userId === '') {
       alert('ログインしてください')
       return
     }
@@ -135,7 +135,7 @@ export default function BookPage({ params }: { params: { id: string } }) {
   }
 
   const onDeleteStock = () => {
-    if (userId === 0) {
+    if (userId === '') {
       alert('ログインしてください')
       return
     }
