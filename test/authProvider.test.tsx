@@ -1,10 +1,10 @@
-import { render } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import { AuthProvider, useAuth } from '@/hooks/authProvider'
 
 describe('AuthProvider', () => {
-  it('provides useAuth hook within AuthProvider', () => {
+  it('provides useAuth hook within AuthProvider', async () => {
     const TestComponent = () => {
-      const { session } = useAuth() // useAuth hookを利用するコンポーネントを作成
+      const { session } = useAuth()
 
       return <div>{session ? 'Authenticated' : 'Not Authenticated'}</div>
     }
@@ -15,7 +15,8 @@ describe('AuthProvider', () => {
       </AuthProvider>
     )
 
-    // AuthProvider 内で useAuth を使用しているため、session が null でないことを確認
-    expect(getByText('Not Authenticated')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(getByText('Not Authenticated')).toBeInTheDocument()
+    })
   })
 })
