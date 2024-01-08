@@ -69,7 +69,7 @@ https://main.d1h9h0rr432r2c.amplifyapp.com/
 
 ## ER図
 
-![ER](https://github.com/serina-yam/search-book-nextjs/assets/64587946/e9fee8bc-e3ab-4fb8-8684-fcf8eb97df89)
+![ER](https://github.com/serina-yam/search-book-nextjs/assets/64587946/8a571025-d31c-4d6d-807a-f101b887f1b0)
 
 ## 画面遷移図
 
