@@ -53,7 +53,7 @@ export default function Login() {
       <NavigationBar />
       <div className="mt-24 flex justify-center">
         <form className="flex flex-col items-center rounded bg-slate-100 px-8 py-6 shadow-md">
-          <h1 className="mb-12 text-xl">Welcom Back!</h1>
+          <h1 className="mb-12 text-xl">Welcome Back!</h1>
           <Button onClick={signInWithGithub}  className="mb-2 rounded-xl bg-zinc-700 px-4 py-2 text-white" startContent={<Github />}>
             Log in with GitHub
           </Button>
