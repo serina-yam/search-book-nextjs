@@ -40,7 +40,7 @@ https://main.d1h9h0rr432r2c.amplifyapp.com/
 
 ### 機能
 
-- GitHubアカウントを利用したユーザー登録 / ログイン機能
+- GitHub・Googleアカウントを利用したユーザー登録 / ログイン機能
 - ストックの取得 / 追加 / 削除機能
 - 本の検索機能
 
