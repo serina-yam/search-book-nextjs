@@ -166,12 +166,12 @@ export default function BookPage({ params }: { params: { id: string } }) {
     <Layout>
       <NavigationBar />
       <div className="mt-12 h-full rounded-xl bg-slate-50 p-12">
-        <div className={`sm:${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-          <div className="flex flex-col items-center justify-center sm:flex-row">
-            <div className="flex w-full justify-center sm:w-1/3">
+        <div className={`md:${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+          <div className="flex flex-col items-center justify-center md:flex-row">
+            <div className="flex w-full justify-center md:w-1/3">
               <Image alt={book?.name} className="rounded-xl object-cover shadow-lg" src={book?.thumbnail} width={200} />
             </div>
-            <div className="mt-6 sm:mt-0">
+            <div className="mt-6 md:mt-0">
               {loadingStock ? (
                 <button>
                   <Loader />
@@ -189,36 +189,36 @@ export default function BookPage({ params }: { params: { id: string } }) {
               )}
               <h2>{book?.name}</h2>
               <dl className="flex">
-                <dt className="w-auto sm:w-32">著者:</dt>
+                <dt className="w-auto md:w-32">著者:</dt>
                 <dd>{book?.author}</dd>
               </dl>
               {book?.industryIdentifier != null ? (
                 <dl className="flex">
-                  <dt className="w-auto sm:w-32">PKEY:</dt>
-                  <dd className="w-auto sm:w-3/4">{book?.industryIdentifier}</dd>
+                  <dt className="w-auto md:w-32">PKEY:</dt>
+                  <dd className="w-auto md:w-3/4">{book?.industryIdentifier}</dd>
                 </dl>
               ) : (
                 <>
                   <dl className="flex">
-                    <dt className="w-auto sm:w-32">ISBN10:</dt>
-                    <dd className="w-auto sm:w-3/4">{book?.isbn10}</dd>
+                    <dt className="w-auto md:w-32">ISBN10:</dt>
+                    <dd className="w-auto md:w-3/4">{book?.isbn10}</dd>
                   </dl>
                   <dl className="flex">
-                    <dt className="w-auto sm:w-32">ISBN13:</dt>
-                    <dd className="w-auto sm:w-3/4">{book?.isbn13}</dd>
+                    <dt className="w-auto md:w-32">ISBN13:</dt>
+                    <dd className="w-auto md:w-3/4">{book?.isbn13}</dd>
                   </dl>
                 </>
               )}
               <dl className="flex">
-                <dt className="w-auto sm:w-32">出版社:</dt>
+                <dt className="w-auto md:w-32">出版社:</dt>
                 <dd>{book?.publisher}</dd>
               </dl>
               <dl className="flex">
-                <dt className="w-auto sm:w-32">発売日:</dt>
+                <dt className="w-auto md:w-32">発売日:</dt>
                 <dd>{book?.published_date}</dd>
               </dl>
               <dl className="flex">
-                <dt className="w-auto sm:w-32">ページ数:</dt>
+                <dt className="w-auto md:w-32">ページ数:</dt>
                 <dd>{book?.page == null || book?.page === 0 ? '' : book?.page}</dd>
               </dl>
             </div>
