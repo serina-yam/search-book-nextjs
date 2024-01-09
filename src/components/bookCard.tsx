@@ -49,9 +49,9 @@ export default function BookCard({
         </Card>
       </Link>
       {/* PC */}
-      <Popover placement="bottom" backdrop="opaque" className="hidden max-w-lg sm:block">
+      <Popover placement="bottom" backdrop="opaque" className="max-w-lg">
         <PopoverTrigger>
-          <Card className="h-full cursor-pointer rounded-xl bg-slate-50 py-4">
+          <Card className="hidden h-full cursor-pointer rounded-xl bg-slate-50 py-4 sm:block">
             <CardBody className="items-center overflow-visible py-2">
               <Image alt={title} className="rounded-xl object-cover shadow-lg" src={thumbnail} width={128} />
             </CardBody>

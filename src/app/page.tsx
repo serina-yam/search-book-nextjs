@@ -77,7 +77,7 @@ export default function Home() {
         <div className={utilStyles.headingMd}>
           <div className={utilStyles.container}>
             <h2 className="pb-2 text-center">
-              <div className="flex flex-col justify-center sm:flex-row">
+              <div className="flex flex-col justify-center md:flex-row">
                 <div>Let&apos;s search for books</div>
               </div>
             </h2>
@@ -90,7 +90,7 @@ export default function Home() {
           </div>
         </div>
         <div className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-          <div className="grid grid-cols-1 items-start gap-2 sm:grid-cols-4">
+          <div className="grid grid-cols-1 items-start gap-2 md:grid-cols-4">
             {books.map((book: BookInfo) => (
               <BookCard
                 key={book.id}
