@@ -36,6 +36,15 @@ https://main.d1h9h0rr432r2c.amplifyapp.com/
 
 **認証:** Supabase
 
+## 技術選定理由
+
+理由や学習方法はZennにまとめています。
+
+「Next.js × Supabaseで書籍ストックサービスを作成するまで〜技術選定理由・学習方法まとめ〜」
+https://zenn.dev/serina_yam/articles/5a357f954ed707
+
+
+
 ## 主要対応一覧
 
 ### 機能
