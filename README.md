@@ -17,6 +17,10 @@
 
 https://main.d1h9h0rr432r2c.amplifyapp.com/
 
+## サービス構成図
+![Diagram](https://github.com/serina-yam/search-book-nextjs/assets/64587946/88bf6fe9-cc68-4329-8897-d80c966a9c58)
+
+
 ## 使用技術一覧
 
 **フロントエンド・バックエンド:** TypeScript 4.9.5 / React 18.0 / Next.js 14.0.2
