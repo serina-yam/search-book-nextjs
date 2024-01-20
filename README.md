@@ -75,7 +75,7 @@ https://zenn.dev/serina_yam/articles/5a357f954ed707
 
 ## ER図
 
-![ER](https://github.com/serina-yam/search-book-nextjs/assets/64587946/8a571025-d31c-4d6d-807a-f101b887f1b0)
+<img width="746" alt="ER図" src="https://github.com/serina-yam/search-book-nextjs/assets/64587946/48af923a-bb6b-4a02-aecc-61802e5dc0af">
 
 ## 画面遷移図
 
